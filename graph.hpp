@@ -148,6 +148,7 @@ void ajouter_adjacents(int Si, int Sj)
 
 }
 
+
 Sommet* getSommet_numeroN(int numero)
 {
         if(numero < ordre && numero >= 0)
@@ -247,77 +248,77 @@ void init_parcour_DFS(int m_id)
         parcour_DFS(m_id /*,&date*/);
 
 }
-vector<vector<int>> kosaraju(int V, vector<vector<int>> adj)
-        {
-                vector<bool> visited(V, false);
-                stack<int> stack;
-                for (int i = 0; i < V; i++)
-                {
-                        if (!visited[i])
-                        {
-                                //  FillStack(i, visited, adj, stack);
-                        }
-                }
-                
-                vector<vector<int>> transpose = Transpose(V, adj);
-
-                fill(visited.begin(), visited.end(), false);
-
-                vector<vector<int>> connectedComponents;
-while(!stack.empty())
+std::vector<std::vector<int> > kosaraju(int V, std::vector<std::vector<int> > adj)
 {
- int node = stack.top();
- stack.pop();
- if(!visited[node])
- {
-        vector<int> component;
-        CollectConnectedComponents(node, visited, transpose, component);
-        connectedComponents.push_back(component);
- }
- 
+        std::vector<bool> visited(V, false);
+        std::stack<int> stack;
+        for (int i = 0; i < V; i++)
+        {
+                if (!visited[i])
+                {
+                        //  FillStack(i, visited, adj, stack);
+                }
+        }
+
+        std::vector<std::vector<int> > transpose = Transpose(V, adj);
+
+        fill(visited.begin(), visited.end(), false);
+
+        std::vector<std::vector<int> > connectedComponents;
+        while(!stack.empty())
+        {
+                int node = stack.top();
+                stack.pop();
+                if(!visited[node])
+                {
+                        std::vector<int> component;
+                        CollectConnectedComponents(node, visited, transpose, component);
+                        connectedComponents.push_back(component);
+                }
+
+        }
+        return connectedComponents;
 }
-return connectedComponents;
-        }
 
-        void FillStack(int node, vector<bool> &visited, vector<vector<int>> &adj, stack<int> &stack)
-        {
-                visited[node] = true;
-                for (auto next : adj[node])
-                {
-                        if (!visited[next])
-                        {
-                                FillStack(next, visited, adj, stack);
-                        }
-                }
-                stack.push(node);
-        }
-
-        vector<vector<int>> Transpose(int V, vector<vector<int>> adj)
-        {
-                vector<vector<int>> transpose(V);
-                for (int i = 0; i < V; i++)
-                {
-                        for (auto next : adj[i])
-                        {
-                                transpose[next].push_back(i);
-                        }
-                }
-
-                return transpose;
-        }
-
-        void CollectConnectedComponents(int node, vector<bool> &visited,
-vector<vector<int>> &adj, vector<int> &component)
+void FillStack(int node, std::vector<bool> &visited, std::vector<std::vector<int> > &adj, std::stack<int> &stack)
 {
- visited[node] = true;
-    component.push_back(node);
-    for(auto next : adj[node])
- {
- if(!visited[next])
- {
-            CollectConnectedComponents(next, visited, adj, component);
- }
- }
+        visited[node] = true;
+        for (auto next : adj[node])
+        {
+                if (!visited[next])
+                {
+                        FillStack(next, visited, adj, stack);
+                }
+        }
+        stack.push(node);
+}
+
+std::vector<std::vector<int> > Transpose(int V, std::vector<std::vector<int> > adj)
+{
+        std::vector<std::vector<int> > transpose(V);
+        for (int i = 0; i < V; i++)
+        {
+                for (auto next : adj[i])
+                {
+                        transpose[next].push_back(i);
+                }
+        }
+
+        return transpose;
+}
+
+void CollectConnectedComponents(int node, std::vector<bool> &visited,
+                                std::vector<std::vector<int> > &adj, std::vector<int> &component)
+{
+        visited[node] = true;
+        component.push_back(node);
+        for(auto next : adj[node])
+        {
+                if(!visited[next])
+                {
+                        CollectConnectedComponents(next, visited, adj, component);
+                }
+        }
 }
 
 void afficher_bfs(int m_id)
@@ -383,27 +384,27 @@ int trouver_comp_connexe()
 }
 
 int trouver_comp_connexe_kosaraju(Graph *G)
-        {
-                int V,indice = 0;
-    vector<vector<int>> adj;
+{
+        int V,indice = 0;
+        std::vector<std::vector<int> > adj;
 
-adj = G->get_tab_sommet;
-    auto connectedComponents = kosaraju(V, adj);
-    cout << "le graph contient " << connectedComponents.size() << " Composants fortements connexes." << endl;
+        //adj = G->get_tab_sommet();
+        auto connectedComponents = kosaraju(V, adj);
+        std::cout << "le graph contient " << connectedComponents.size() << " Composants fortements connexes." << std::endl;
 
-    indice = connectedComponents.size();
+        indice = connectedComponents.size();
 
-   /* for(auto component : connectedComponents)
- {
-        cout << "\t";
-        for(auto node : component)
- {
- cout << node << " ";
- }
-        cout << endl;
- }*/
- return indice;
-        }
+        /* for(auto component : connectedComponents)
+           {
+             cout << "\t";
+             for(auto node : component)
+           {
+           cout << node << " ";
+           }
+             cout << endl;
+           }*/
+        return indice;
+}
 
 
 void afficher_composant_connexe()
