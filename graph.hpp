@@ -24,9 +24,9 @@ public:
 
 Graph(std::string nom_fichier, std::string fichier_ponderation) :  fichier(nom_fichier), fichier_pond(fichier_ponderation){
 
-        if(!fichier)
+        if(!fichier || !fichier_pond)
         {
-                std::cout << "error";
+                std::cerr << "File load error";
                 exit(0);
         }
         fichier >> orientation;

@@ -225,6 +225,12 @@ std::map<Sommet*,float> Centralisation::centra_propre() {
         return resultat_propre;
 }
 
+void Centralisation::centra_all()
+{
+        centra_deg();
+        centra_prox();
+        centra_propre();
+}
 
 //--------------------------------------------------------------------------
 //-------------------------------------------------------------------------

@@ -23,6 +23,8 @@ Centralisation(Graph* a);
 std::map<Sommet*,float> centra_prox();
 std::map<Sommet*,float>  centra_deg();
 std::map<Sommet*,float> centra_propre();
+
+void centra_all();
 //--------------Auxilliaire-------------------------------------------
 void dijkstra(int sommet_depart);
 void set_all_unvisited();
