@@ -162,13 +162,13 @@ void Centralisation::afficher_prox()
 
         std::cout << "---------------------" << std::endl;
 
-        for(it = resultat_propre.begin(); it!=resultat_propre.end(); ++it)
+        for(std::map<Sommet*,float>::iterator it2 = resultat_propre.begin(); it2!=resultat_propre.end(); ++it2)
         {
-                if(it->first!=nullptr)
+                if(it2->first!=nullptr)
                 {
-                        std::cout << "Sommet " << it->first->get_nom()
+                        std::cout << "Sommet " << it2->first->get_nom()
                                   << " : "
-                                  << it->second << std::endl;
+                                  << it2->second << std::endl;
                 }
         }
 }
@@ -189,59 +189,48 @@ std::vector<std::pair<Sommet*,float> > Centralisation::centra_deg() {
         return resultat_deg;
 }
 
-std::vector<std::pair<Sommet*,float> > Centralisation::centra_propre() {
+std::map<Sommet*,float> Centralisation::centra_propre() {
 
 //----------INITIALISATION-------------------
 
-        Sommet* temp;
+
         float lambda=0;
+        float lambdaMoinsUn=0;
         float ci=0;
-        float cvp=0;
         float totCi=0;
-        int i=0;
-        std::queue<std::pair<Sommet*,float> > file_ci;
+
+        std::map<Sommet*,float> file_ci;
         for(std::vector<Sommet*>::iterator it = m_sommet->begin(); it != m_sommet->end(); ++it)
         {
-                resultat_propre.push_back(std::make_pair((*it),1));  // Tous a 1
+                resultat_propre[*it]=1;  // Tous a 1
         }
 //---------BOUCLE-----------------------------------
 
-        while(i<100)
+        do
         {
+                lambdaMoinsUn = lambda;
                 lambda = 0;
                 totCi = 0;
-                for(std::vector<Sommet*>::iterator it = m_sommet->begin(); it!=m_sommet->end(); ++it)
+
+                for(std::map<Sommet*,float>::iterator it1=resultat_propre.begin(); it1!=resultat_propre.end(); ++it1)
                 {
-                        ci=0;
-                        for(std::vector<Sommet*>::iterator it2 = (*it)->get_adja()->begin(); it2!=(*it)->get_adja()->end(); ++it2)
+                        for(std::vector<Sommet*>::iterator it2 = it1->first->get_adja()->begin(); it2!=it1->first->get_adja()->end(); ++it2)
                         {
-                                for(std::vector<std::pair<Sommet*,float> >::iterator it3 = resultat_propre.begin(); it3!=resultat_propre.end(); ++it3)
-                                {
-                                        if(it3->first==*it2)
-                                        {
-                                                cvp = it3->second;
-                                                temp = it3->first;
-                                        }
-                                }
-                                ci+=cvp;
-                                file_ci.push(std::make_pair(temp,ci));
+                                ci+=resultat_propre[*it2];
                                 totCi+=ci;
+                                file_ci[*it2]=ci;
+
                         }
                 }
                 //lambda = sqrt(totCi*totCi);
 
-                while(!file_ci.empty())
-                        for(std::vector<std::pair<Sommet*,float> >::iterator it3 = resultat_propre.begin(); it3!=resultat_propre.end(); ++it3)
-                        {
-                                if(it3->first==file_ci.front().first)
-                                {
-                                        it3->second = file_ci.front().second/lambda;
-                                        file_ci.pop();
 
-                                }
-                        }
-                i++;
-        }
+                for(std::map<Sommet*,float>::iterator it3 = file_ci.begin(); it3!=file_ci.end(); ++it3)
+                {
+                        resultat_propre[it3->first]=it3->second/lambda;
+                }
+
+        } while(lambda-lambdaMoinsUn>1000);
 
         return resultat_propre;
 }
