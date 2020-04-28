@@ -15,7 +15,7 @@ Centralisation::Centralisation(Graph* a) : m_graph(a){
 Centralisation::~Centralisation(){
 }
 
-std::vector<std::pair<Sommet*,float> > Centralisation::centra_prox(){
+std::map<Sommet*,float> Centralisation::centra_prox(){
 
         float totDist=0;
         for(std::vector<Sommet*>::iterator it = m_sommet->begin(); it != m_sommet->end(); ++it)
@@ -25,7 +25,7 @@ std::vector<std::pair<Sommet*,float> > Centralisation::centra_prox(){
                 {
                         totDist+=calcul_d((*it)->get_id(),(*it2)->get_id());
                 }
-                resultat_prox.push_back(std::make_pair(*it,(1/totDist)*(m_sommet->size()-1)));
+                resultat_prox[*it]=(1/totDist)*(m_sommet->size()-1);
         }
         return resultat_prox;
 }
@@ -133,13 +133,14 @@ void Centralisation::dijkstra(int sommet_depart)
                                 }
                         }
                 }
+
         }
 }
 
 void Centralisation::afficher_prox()
 {
-        std::vector<std::pair<Sommet*,float> >::iterator it;
-        for(it = resultat_prox.begin(); it!=resultat_prox.end(); ++it)
+        std::map<Sommet*,float>::iterator it;
+        for(it= resultat_prox.begin(); it!=resultat_prox.end(); ++it)
         {
                 if(it->first!=nullptr)
                 {
@@ -162,18 +163,18 @@ void Centralisation::afficher_prox()
 
         std::cout << "---------------------" << std::endl;
 
-        for(std::map<Sommet*,float>::iterator it2 = resultat_propre.begin(); it2!=resultat_propre.end(); ++it2)
+        for(it = resultat_propre.begin(); it!=resultat_propre.end(); ++it)
         {
-                if(it2->first!=nullptr)
+                if(it->first!=nullptr)
                 {
-                        std::cout << "Sommet " << it2->first->get_nom()
+                        std::cout << "Sommet " << it->first->get_nom()
                                   << " : "
-                                  << it2->second << std::endl;
+                                  << it->second << std::endl;
                 }
         }
 }
 
-std::vector<std::pair<Sommet*,float> > Centralisation::centra_deg() {
+std::map<Sommet*,float>  Centralisation::centra_deg() {
 
         float deg = 0;
         for(std::vector<Sommet*>::iterator it = m_sommet->begin(); it != m_sommet->end(); ++it)
@@ -184,7 +185,7 @@ std::vector<std::pair<Sommet*,float> > Centralisation::centra_deg() {
                         deg++;
 
                 }
-                resultat_deg.push_back(std::make_pair(*it,(deg)/(m_sommet->size()-1)));
+                resultat_deg[*it]=(deg)/(m_sommet->size()-1);
         }
         return resultat_deg;
 }
