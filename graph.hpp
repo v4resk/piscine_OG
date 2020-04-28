@@ -71,7 +71,7 @@ void creer_svg()
         ratioX = 1000/(smax.get_X() - smin.get_X() + 2);
         ratioY = 1000/(smax.get_Y() - smin.get_Y() + 2);
 
-        svgOUT.addGrid(ratioX, 0, "grey");
+        svgOUT.addGrid(ratioX, 0, "green");
 
         for(auto k : m_arete)
         {
