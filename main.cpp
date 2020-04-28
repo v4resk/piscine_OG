@@ -5,14 +5,15 @@
 int main(int argc, char const *argv[])
 {
 
-        Graph a("guadeloupe.txt", "pondeguada.txt");
+        Graph a("res.txt", "res_pond.txt");
         Centralisation cent(&a);
         std::cout << a;
 
 //-------------Prox------------------------
-        cent.centra_prox();
-        cent.centra_deg();
-        cent.centra_propre();
+        cent.centra_prox(); //NUL
+        cent.centra_deg(); //Ok
+        cent.centra_propre(); // A verifier
+        //cent.centra_intermediaire(); // a faire
         cent.afficher_all();
         cent.file_out_res_all();
 //----------------------------------------

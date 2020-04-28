@@ -149,10 +149,9 @@ void Centralisation::un_normaliser_res_prox(){
 
 std::map<Sommet*,float> Centralisation::centra_prox(){
 
-        float totDist=0;
         for(std::vector<Sommet*>::iterator it = m_sommet->begin(); it != m_sommet->end(); ++it)
         {
-                totDist = 0;
+                float totDist = 0;
                 for(std::vector<Sommet*>::iterator it2 = m_sommet->begin(); it2!=m_sommet->end(); ++it2)
                 {
                         totDist+=calcul_d((*it)->get_id(),(*it2)->get_id());
@@ -186,36 +185,43 @@ std::map<Sommet*,float> Centralisation::centra_propre() {
         float lambda=0;
         float lambdaMoinsUn=0;
         float ci=0;
-        float totCi=0;
+        std::map<Sommet*,float> map_ci;
+        std::vector<float> vec_ci;
 
-        std::map<Sommet*,float> file_ci;
         for(std::vector<Sommet*>::iterator it = m_sommet->begin(); it != m_sommet->end(); ++it)
         {
                 resultat_propre[*it]=1;  // Tous a 1
         }
-        //---------BOUCLE-----------------------------------
-        do
-        {
+        //---------BOUCLE----------------------------------
+        do {
                 lambdaMoinsUn = lambda;
                 lambda = 0;
-                totCi = 0;
 
                 for(std::map<Sommet*,float>::iterator it1=resultat_propre.begin(); it1!=resultat_propre.end(); ++it1)
                 {
+                        ci=0;
                         if((*it1).first->get_adja()!=nullptr)
                                 for(std::vector<Sommet*>::iterator it2 = it1->first->get_adja()->begin(); it2!=it1->first->get_adja()->end(); ++it2)
                                 {
                                         ci+=resultat_propre[*it2];
-                                        totCi+=ci;
-                                        file_ci[*it2]=ci;
                                 }
+                        map_ci[it1->first]=ci;
                 }
-                lambda = sqrt(totCi*totCi);
-                for(std::map<Sommet*,float>::iterator it3 = file_ci.begin(); it3!=file_ci.end(); ++it3)
+
+                for(std::map<Sommet*,float>::iterator it = map_ci.begin(); it!=map_ci.end(); ++it)
                 {
-                        resultat_propre[it3->first]=it3->second/lambda;
+                        lambda+=(float)pow(it->second,2);
                 }
+                lambda=sqrt(lambda);
+
+                for(std::map<Sommet*,float>::iterator it = map_ci.begin(); it!=map_ci.end(); ++it)
+                {
+                        resultat_propre[it->first]=it->second/lambda;
+                }
+
+
         } while(lambda-lambdaMoinsUn>1000);
+
         return resultat_propre;
 }
 
