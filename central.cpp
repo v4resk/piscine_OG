@@ -223,7 +223,7 @@ std::map<Sommet*,float> Centralisation::centra_propre() {
 
                         }
                 }
-                lambda = sqrt(totCi*totCi);
+                //lambda = sqrt(totCi*totCi);
 
 
                 for(std::map<Sommet*,float>::iterator it3 = file_ci.begin(); it3!=file_ci.end(); ++it3)

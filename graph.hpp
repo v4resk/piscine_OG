@@ -53,7 +53,7 @@ Graph(std::string nom_fichier, std::string fichier_ponderation) :  fichier(nom_f
 
 void creer_svg()
 {
-        Svgfile svgOUT("testokartier",1000,1000);
+        Svgfile svgOUT("testokartier.svg",1000,1000);
         std::string color = "red";
         Sommet smin, smax;
         int ratioX, ratioY;
@@ -285,7 +285,7 @@ int trouver_comp_connexe()
                         init_parcour_DFS(it->ObtenirId());
                         it->setConnex(indice_connexe);
                         for(auto it2 : m_sommet)
-                        { 
+                        {
                                 if(it2->getPred() != nullptr && it2->getConnex() == -1)
                                         (it2)->setConnex(indice_connexe);
                         }
