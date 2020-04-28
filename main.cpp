@@ -10,7 +10,7 @@ int main(int argc, char const *argv[])
         std::cout << a;
 
 //-------------Prox------------------------
-        cent.centra_prox();
+      //  cent.centra_prox();
         cent.centra_deg();
         cent.centra_propre();
         cent.afficher_all();
