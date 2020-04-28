@@ -9,6 +9,8 @@
 #include "arete.hpp"
 #include "graph.hpp"
 #include <map>
+#include <queue>
+#include <math.h>
 
 class Centralisation
 {
@@ -16,8 +18,8 @@ public:
 Centralisation(Graph* a);
 ~Centralisation();
 
-std::vector<std::pair<Sommet*,float> > centra_prox();
-std::vector<std::pair<Sommet*,float> > centra_deg();
+std::map<Sommet*,float> centra_prox();
+std::map<Sommet*,float>  centra_deg();
 std::map<Sommet*,float> centra_propre();
 void dijkstra(int sommet_depart);
 void set_all_unvisited();
@@ -39,8 +41,9 @@ std::vector<bool> m_marque;
 std::vector<int> m_distance;
 std::vector<int> m_pred;
 //-------RECEPTIONNE LE RESULTATS DES FONCTIONS CENTRALISATION------------
-std::vector<std::pair<Sommet*,float> > resultat_prox; // Stock les resultats de centra_prox. A chaque Sommet associe sont coef de centralité
-std::vector<std::pair<Sommet*,float> > resultat_deg;
+//std::vector<std::pair<Sommet*,float> > resultat_prox; // Stock les resultats de centra_prox. A chaque Sommet associe sont coef de centralité
+std::map<Sommet*,float> resultat_prox;
+std::map<Sommet*,float> resultat_deg;
 std::map<Sommet*,float> resultat_propre;
 };
 
