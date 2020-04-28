@@ -242,7 +242,6 @@ void init_parcour_DFS(int m_id)
 {
         //  set_all_date_zero();
         set_all_unvisited();
-        int date = 0;
         parcour_DFS(m_id /*,&date*/);
 
 }
