@@ -13,6 +13,8 @@
 #include "svgfile.hpp"
 #include <algorithm>
 #include <math.h>
+#include <list>
+#include <stack>
 //#include "central.hpp"
 
 
@@ -245,7 +247,78 @@ void init_parcour_DFS(int m_id)
         parcour_DFS(m_id /*,&date*/);
 
 }
+vector<vector<int>> kosaraju(int V, vector<vector<int>> adj)
+        {
+                vector<bool> visited(V, false);
+                stack<int> stack;
+                for (int i = 0; i < V; i++)
+                {
+                        if (!visited[i])
+                        {
+                                //  FillStack(i, visited, adj, stack);
+                        }
+                }
+                
+                vector<vector<int>> transpose = Transpose(V, adj);
 
+                fill(visited.begin(), visited.end(), false);
+
+                vector<vector<int>> connectedComponents;
+while(!stack.empty())
+{
+ int node = stack.top();
+ stack.pop();
+ if(!visited[node])
+ {
+        vector<int> component;
+        CollectConnectedComponents(node, visited, transpose, component);
+        connectedComponents.push_back(component);
+ }
+ 
+}
+return connectedComponents;
+        }
+
+        void FillStack(int node, vector<bool> &visited, vector<vector<int>> &adj, stack<int> &stack)
+        {
+                visited[node] = true;
+                for (auto next : adj[node])
+                {
+                        if (!visited[next])
+                        {
+                                FillStack(next, visited, adj, stack);
+                        }
+                }
+                stack.push(node);
+        }
+
+        vector<vector<int>> Transpose(int V, vector<vector<int>> adj)
+        {
+                vector<vector<int>> transpose(V);
+                for (int i = 0; i < V; i++)
+                {
+                        for (auto next : adj[i])
+                        {
+                                transpose[next].push_back(i);
+                        }
+                }
+
+                return transpose;
+        }
+
+        void CollectConnectedComponents(int node, vector<bool> &visited,
+vector<vector<int>> &adj, vector<int> &component)
+{
+ visited[node] = true;
+    component.push_back(node);
+    for(auto next : adj[node])
+ {
+ if(!visited[next])
+ {
+            CollectConnectedComponents(next, visited, adj, component);
+ }
+ }
+}
 
 void afficher_bfs(int m_id)
 {
@@ -309,10 +382,28 @@ int trouver_comp_connexe()
         return indice_connexe;
 }
 
-void trouver_comp_connexe_kosaraju()
-{
+int trouver_comp_connexe_kosaraju(Graph *G)
+        {
+                int V,indice = 0;
+    vector<vector<int>> adj;
 
-}
+adj = G->get_tab_sommet;
+    auto connectedComponents = kosaraju(V, adj);
+    cout << "le graph contient " << connectedComponents.size() << " Composants fortements connexes." << endl;
+
+    indice = connectedComponents.size();
+
+   /* for(auto component : connectedComponents)
+ {
+        cout << "\t";
+        for(auto node : component)
+ {
+ cout << node << " ";
+ }
+        cout << endl;
+ }*/
+ return indice;
+        }
 
 
 void afficher_composant_connexe()
