@@ -9,6 +9,8 @@
 #include "arete.hpp"
 #include "graph.hpp"
 #include <map>
+#include <queue>
+#include <math.h>
 
 class Centralisation
 {

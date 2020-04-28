@@ -159,6 +159,18 @@ void Centralisation::afficher_prox()
                                   << it->second << std::endl;
                 }
         }
+
+        std::cout << "---------------------" << std::endl;
+
+        for(it = resultat_propre.begin(); it!=resultat_propre.end(); ++it)
+        {
+                if(it->first!=nullptr)
+                {
+                        std::cout << "Sommet " << it->first->get_nom()
+                                  << " : "
+                                  << it->second << std::endl;
+                }
+        }
 }
 
 std::vector<std::pair<Sommet*,float> > Centralisation::centra_deg() {
@@ -178,6 +190,58 @@ std::vector<std::pair<Sommet*,float> > Centralisation::centra_deg() {
 }
 
 std::vector<std::pair<Sommet*,float> > Centralisation::centra_propre() {
+
+//----------INITIALISATION-------------------
+
+        Sommet* temp;
+        float lambda=0;
+        float ci=0;
+        float cvp=0;
+        float totCi=0;
+        int i=0;
+        std::queue<std::pair<Sommet*,float> > file_ci;
+        for(std::vector<Sommet*>::iterator it = m_sommet->begin(); it != m_sommet->end(); ++it)
+        {
+                resultat_propre.push_back(std::make_pair((*it),1));  // Tous a 1
+        }
+//---------BOUCLE-----------------------------------
+
+        while(i<100)
+        {
+                lambda = 0;
+                totCi = 0;
+                for(std::vector<Sommet*>::iterator it = m_sommet->begin(); it!=m_sommet->end(); ++it)
+                {
+                        ci=0;
+                        for(std::vector<Sommet*>::iterator it2 = (*it)->get_adja()->begin(); it2!=(*it)->get_adja()->end(); ++it2)
+                        {
+                                for(std::vector<std::pair<Sommet*,float> >::iterator it3 = resultat_propre.begin(); it3!=resultat_propre.end(); ++it3)
+                                {
+                                        if(it3->first==*it2)
+                                        {
+                                                cvp = it3->second;
+                                                temp = it3->first;
+                                        }
+                                }
+                                ci+=cvp;
+                                file_ci.push(std::make_pair(temp,ci));
+                                totCi+=ci;
+                        }
+                }
+                lambda = sqrt(totCi*totCi);
+
+                while(!file_ci.empty())
+                        for(std::vector<std::pair<Sommet*,float> >::iterator it3 = resultat_propre.begin(); it3!=resultat_propre.end(); ++it3)
+                        {
+                                if(it3->first==file_ci.front().first)
+                                {
+                                        it3->second = file_ci.front().second/lambda;
+                                        file_ci.pop();
+
+                                }
+                        }
+                i++;
+        }
 
         return resultat_propre;
 }

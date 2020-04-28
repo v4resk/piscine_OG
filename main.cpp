@@ -10,6 +10,7 @@ int main(int argc, char const *argv[]) {
 //-------------Prox------------------------
         cent.centra_prox();
         cent.centra_deg();
+        cent.centra_propre();
         cent.afficher_prox();
 //----------------------------------------
         a.creer_svg();

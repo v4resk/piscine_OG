@@ -43,6 +43,9 @@ Graph(std::string nom_fichier, std::string fichier_ponderation) :  fichier(nom_f
                 fichier_pond >> m_id >> poid;
                 ajouter_poid(m_id,poid);
         }
+
+        fichier_pond.close();
+        fichier.close();
 }
 
 void creer_svg()
