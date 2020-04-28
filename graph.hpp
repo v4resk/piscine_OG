@@ -4,6 +4,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
+#include <map>
+#include <iterator>
 #include <fstream>
 #include "arete.hpp"
 #include "sommet.hpp"
@@ -74,7 +77,7 @@ void creer_svg()
         ratioX = 1000/(smax.get_X() - smin.get_X() + 2);
         ratioY = 1000/(smax.get_Y() - smin.get_Y() + 2);
 
-        svgOUT.addGrid(ratioX, 0, "grey");
+        svgOUT.addGrid(ratioX, 0, "green");
 
         for(auto k : m_arete)
         {
@@ -172,13 +175,173 @@ void afficher(std::ostream& flux)
         }
 }
 
+int get_orientation()
+{
+        return orientation;
+}
+void parcour_BFS(int nbr_s0)
+{
+
+        Sommet* s0 = getSommet_numeroN(nbr_s0);
+        Sommet* temp = nullptr;
+        std::queue<Sommet*> file;
+        set_all_unvisited();
+
+        s0->setVisited_bool(true);
+        s0->setPred(s0);
+        file.push(s0);
+
+        std::cout << std::endl << "Parcour BFS a partir du sommet "<< nbr_s0 << std::endl;
+
+        while (!file.empty())
+        {
+                // On defile l'element rentrer en premier dans la file
+                temp = file.front();
+                file.pop();
+
+                for(auto it : temp->ObtenirAdjacents())
+                {
+                        if(!it->getVisited_bool())         // Si pas visiter
+                        {
+                                it->setVisited_bool(true);
+                                it->setPred(temp);
+                                file.push(it);
+                        }
+                }
+        }
+}
+
+void parcour_DFS(int m_id/*,int* date*/){
+        Sommet* s0 = getSommet_numeroN(m_id);
+      //  s0->setDate(date,false);
+        s0->setVisited_bool(true);
+      //  date++;
+        for(auto it: s0->ObtenirAdjacents())
+        {
+                if(!it->getVisited_bool())
+                {
+                        parcour_DFS(it->ObtenirId()/*,date*/);
+                        it->setPred(s0);
+                }
+
+
+               // s0->setDate(date,true);
+            //    date++;
+        }
+}
+
+void init_parcour_DFS(int m_id)
+{
+      //  set_all_date_zero();
+        set_all_unvisited();
+        int date = 0;
+        parcour_DFS(m_id/*,&date*/);
+
+}
+
+
+void afficher_bfs(int m_id)
+{
+        std::vector<Sommet*>::iterator it;
+        Sommet* s0 = m_sommet[m_id];
+        //On parcour le tableau de sommet
+        for(it=m_sommet.begin(); it!=m_sommet.end(); ++it)
+        {
+                if(*it != s0)                 // si pas le sommet initiale
+                {
+                        if((*it)->getVisited_bool())         // Si le sommet a également été visiter
+                        {
+                                std::cout << (*it)->ObtenirId() << "<---"; // On affiche le premier sommet de la liste ayant ete visite
+                                Sommet* pred = (*it)->getPred();
+                                if(pred != nullptr)
+                                {
+
+                                        while (pred != s0) {
+                                                std::cout << pred->ObtenirId() << "<--";
+                                                pred = pred->getPred();
+                                        }
+                                }
+                                std::cout << s0->ObtenirId() <<  std::endl;
+                        }
+                }
+        }
+}
+
+void afficher_dfs(int m_id)
+{
+        std::cout << std::endl << "Parcour DFS a partir du sommet "<< m_id << std::endl;
+        afficher_bfs(m_id);
+}
+
+// Marche seulement pour graphe non orienter
+int trouver_comp_connexe()
+{
+        int indice_connexe = 0;
+        // On note dans sommet leur comp connexe
+        for(auto it: m_sommet)
+        {
+                if(it->getConnex() == -1)// Si il n'est pas dans une comp connexe
+                {
+                        init_parcour_DFS(it->ObtenirId());
+                        it->setConnex(indice_connexe);
+                        for(auto it2 : m_sommet)
+                        { 
+                                if(it2->getPred() != nullptr && it2->getConnex() == -1)
+                                        (it2)->setConnex(indice_connexe);
+                        }
+                        indice_connexe++;
+                }
+        }
+
+        // On crée une map de composant connexe
+        for(auto it: m_sommet)
+        {
+                m__comp_connexe[it->getConnex()].push_back(it);
+        }
+
+return indice_connexe;
+}
+
+void trouver_comp_connexe_kosaraju()
+{
+
+}
+
+
+void afficher_composant_connexe()
+{
+        std::map<int,std::vector<Sommet*> >::iterator map_it;
+        std::vector<Sommet*>::iterator vec_it;
+
+        for(map_it = m__comp_connexe.begin(); map_it!= m__comp_connexe.end(); ++map_it)
+        {
+                std::cout << "composant connexe n°" << map_it->first << " : " << std::endl;
+                for(vec_it=(*map_it).second.begin(); vec_it != (*map_it).second.end(); ++vec_it)
+                {
+                        std::cout << (*vec_it)->ObtenirId() << " ";
+                }
+                std::cout << std::endl;
+        }
+}
+
 
 
 
 private:
+
+void set_all_unvisited()
+{
+        for(auto it : m_sommet)
+        {
+                it->setVisited_bool(false);
+                it->setPred(nullptr);
+        }
+}
+
 std::ifstream fichier, fichier_pond;
 std::vector<Sommet*> m_sommet;
 std::vector<Arete*> m_arete;
+std::map<int,std::vector<Sommet*> > m__comp_connexe;
 int taille,ordre,orientation,poid;
 int m_x,m_y,m_id;
 int Si,Sj;

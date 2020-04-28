@@ -1,7 +1,9 @@
 #include "graph.hpp"
 #include "surcharge.hpp"
 #include "central.hpp"
-int main(int argc, char const *argv[]) {
+
+int main(int argc, char const *argv[])
+{
 
         Graph a("reseau.txt", "ponderation.txt");
         Centralisation cent(&a);
@@ -15,7 +17,7 @@ int main(int argc, char const *argv[]) {
 //----------------------------------------
         a.creer_svg();
 
-        //---------------------------------------------------------
+//-------------------------------------------
 
         return 0;
 }
