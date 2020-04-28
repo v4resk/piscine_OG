@@ -97,6 +97,8 @@ void creer_svg()
         }
 
 
+
+
 }
 
 void ajouter_poid(int m_id,int poid)
@@ -214,31 +216,31 @@ void parcour_BFS(int nbr_s0)
         }
 }
 
-void parcour_DFS(int m_id/*,int* date*/){
+void parcour_DFS(int m_id /*,int* date*/){
         Sommet* s0 = getSommet_numeroN(m_id);
-      //  s0->setDate(date,false);
+        //  s0->setDate(date,false);
         s0->setVisited_bool(true);
-      //  date++;
+        //  date++;
         for(auto it: s0->ObtenirAdjacents())
         {
                 if(!it->getVisited_bool())
                 {
-                        parcour_DFS(it->ObtenirId()/*,date*/);
+                        parcour_DFS(it->ObtenirId() /*,date*/);
                         it->setPred(s0);
                 }
 
 
-               // s0->setDate(date,true);
-            //    date++;
+                // s0->setDate(date,true);
+                //    date++;
         }
 }
 
 void init_parcour_DFS(int m_id)
 {
-      //  set_all_date_zero();
+        //  set_all_date_zero();
         set_all_unvisited();
         int date = 0;
-        parcour_DFS(m_id/*,&date*/);
+        parcour_DFS(m_id /*,&date*/);
 
 }
 
@@ -302,7 +304,7 @@ int trouver_comp_connexe()
                 m__comp_connexe[it->getConnex()].push_back(it);
         }
 
-return indice_connexe;
+        return indice_connexe;
 }
 
 void trouver_comp_connexe_kosaraju()
@@ -328,7 +330,10 @@ void afficher_composant_connexe()
 }
 
 
-
+/*void set_centra(Centralisation* a)
+   {
+        central =a;
+   } */
 
 private:
 
@@ -349,6 +354,7 @@ int taille,ordre,orientation,poid;
 int m_x,m_y,m_id;
 int Si,Sj;
 char m_nom;
+//Centralisation central;
 
 };
 

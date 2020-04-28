@@ -58,13 +58,16 @@ bool Centralisation::chemin_a_ver_b(int a,int b)
         bool chemin_existe = false;
         Sommet* sA = (*m_sommet)[a];
         Sommet* sB = (*m_sommet)[b];
-        for(std::vector<Sommet*>::iterator it = sA->get_adja()->begin(); it!= sA->get_adja()->end(); ++it )
-        {
-                if(*it == sB)
+
+        if(sA->get_adja()!=nullptr || sB->get_adja()!=nullptr)
+                for(std::vector<Sommet*>::iterator it = sA->get_adja()->begin(); it!= sA->get_adja()->end(); ++it )
                 {
-                        chemin_existe = true;
+                        if(*it!=nullptr && sB !=nullptr)
+                                if(*it == sB)
+                                {
+                                        chemin_existe = true;
+                                }
                 }
-        }
 
         return chemin_existe;
 
@@ -76,11 +79,12 @@ int Centralisation::min_sommet()
         int sMin = INT_NULL;
         for(int i=0; i < m_sommet->size(); ++i)
         {
-                if(!m_marque[i] && m_distance[i] < dMin)
-                {
-                        dMin = m_distance[i];
-                        sMin = i;
-                }
+                if((*m_sommet)[i]->get_adja()!=nullptr)
+                        if(!m_marque[i] && m_distance[i] < dMin)
+                        {
+                                dMin = m_distance[i];
+                                sMin = i;
+                        }
         }
 
         return sMin;
@@ -110,28 +114,31 @@ void Centralisation::dijkstra(int sommet_depart)
 
                 for(int j=0; j<m_sommet->size(); j++)
                 {
-                        if(chemin_a_ver_b(s,j))                         // Si il existe un chemin allant du sommet s est adjacent a J
-                        {
-                                for(std::vector<Sommet*>::iterator it=(*m_sommet)[s]->get_adja()->begin(); it != (*m_sommet)[s]->get_adja()->end(); ++it)
+
+                        if(s!=j)
+                                if(chemin_a_ver_b(s,j))                     // Si il existe un chemin allant du sommet s a J
                                 {
-                                        if(*it ==  (*m_sommet)[j])
+
+                                        for(std::vector<Sommet*>::iterator it=(*m_sommet)[s]->get_adja()->begin(); it != (*m_sommet)[s]->get_adja()->end(); ++it)     // Parcour les adjacents de s
                                         {
-                                                for(auto it : *m_arete)
+                                                if(*it ==  (*m_sommet)[j])    // Si on trouve J
                                                 {
-                                                        if(std::make_pair((*m_sommet)[s],(*m_sommet)[j])== *(it->get_pair()))
+                                                        for(auto it : *m_arete)
                                                         {
-                                                                poid_adj = it->get_poid();
+                                                                if(std::make_pair((*m_sommet)[s],(*m_sommet)[j])== *(it->get_pair()))
+                                                                {
+                                                                        poid_adj = it->get_poid();
+                                                                }
                                                         }
+                                                        // On récupere le poid entre le chemin s et J
                                                 }
-                                                // On récupere le poid entre le chemin s et J
+                                        }
+                                        if(m_distance[s]+ poid_adj < m_distance[j])
+                                        {
+                                                m_distance[j] = m_distance[s]+ poid_adj;
+                                                m_pred[j]=s;
                                         }
                                 }
-                                if(m_distance[s]+ poid_adj < m_distance[j])
-                                {
-                                        m_distance[j] = m_distance[s]+ poid_adj;
-                                        m_pred[j]=s;
-                                }
-                        }
                 }
 
         }

@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <iterator>
+
 class Sommet {
 
 public:
@@ -35,7 +36,10 @@ int get_id()
 
 std::vector<Sommet*>* get_adja()
 {
-        return &m_adjacents;
+        if(m_adjacents.size()!=0)
+                return &m_adjacents;
+        else
+                return nullptr;
 }
 
 void ajouter_adjacents(Sommet* adja)

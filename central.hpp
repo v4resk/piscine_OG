@@ -1,7 +1,9 @@
 #ifndef CENTRAL
 #define CENTRAL
+
 #define INF 9999999
 #define INT_NULL 7990
+
 
 #include <iostream>
 #include <vector>
@@ -29,6 +31,9 @@ void setVisited_bool(bool a, int s);
 bool chemin_a_ver_b(int a, int b);
 void afficher_prox();
 float calcul_d(int Si, int Sj);
+
+//--------------------gett all result--------------------------
+
 
 
 
