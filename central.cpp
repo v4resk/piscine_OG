@@ -228,7 +228,7 @@ std::vector<std::pair<Sommet*,float> > Centralisation::centra_propre() {
                                 totCi+=ci;
                         }
                 }
-                lambda = sqrt(totCi*totCi);
+                //lambda = sqrt(totCi*totCi);
 
                 while(!file_ci.empty())
                         for(std::vector<std::pair<Sommet*,float> >::iterator it3 = resultat_propre.begin(); it3!=resultat_propre.end(); ++it3)

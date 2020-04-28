@@ -9,8 +9,6 @@
 #include "arete.hpp"
 #include "graph.hpp"
 #include <map>
-#include <queue>
-#include <math.h>
 
 class Centralisation
 {
@@ -29,6 +27,7 @@ void setVisited_bool(bool a, int s);
 bool chemin_a_ver_b(int a, int b);
 void afficher_prox();
 float calcul_d(int Si, int Sj);
+
 
 
 private:
