@@ -13,6 +13,16 @@ public:
 Sommet(int id = 0, char nom = '\0', int x=0, int y=0) : m_x(x),m_y(y),m_id(id),m_nom(nom){
 };
 
+int ObtenirId() const
+{
+        return m_id;
+}
+
+std::vector<Sommet*>& ObtenirAdjacents()
+{
+        return m_adjacents;
+}
+
 char get_nom()
 {
         return m_nom;
@@ -61,6 +71,36 @@ void afficher(std::ostream& flux)
         }
 }
 
+void setVisited_bool(bool val)
+{
+        m_visited = val;
+}
+
+void setPred(Sommet* predeseceur)
+{
+        m_pred = predeseceur;
+}
+
+Sommet* getPred()
+{
+        return m_pred;
+}
+
+bool getVisited_bool()
+{
+        return m_visited;
+}
+
+void setConnex(int a)
+{
+        comp_connexe = a;
+}
+
+int getConnex()
+{
+        return comp_connexe;
+}
+
 int get_X()
 {
         return m_x;
@@ -84,8 +124,11 @@ void set_Y(int y)
 
 private:
 std::vector<Sommet*> m_adjacents;
+bool m_visited;
+Sommet* m_pred;
 int m_x,m_y,m_id;
 char m_nom;
+int comp_connexe;
 
 };
 
