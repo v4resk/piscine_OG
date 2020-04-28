@@ -5,7 +5,7 @@
 int main(int argc, char const *argv[])
 {
 
-        Graph a("reseau.txt", "ponderation.txt");
+        Graph a("guadeloupe.txt", "pondeguada.txt");
         Centralisation cent(&a);
         std::cout << a;
 
