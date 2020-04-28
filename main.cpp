@@ -13,7 +13,8 @@ int main(int argc, char const *argv[])
         cent.centra_prox();
         cent.centra_deg();
         cent.centra_propre();
-        cent.afficher_prox();
+        cent.afficher_all();
+        cent.file_out_res_all();
 //----------------------------------------
         a.creer_svg();
 

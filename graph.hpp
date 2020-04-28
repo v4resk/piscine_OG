@@ -12,6 +12,9 @@
 #include "sommet.hpp"
 #include "svgfile.hpp"
 #include <algorithm>
+#include <math.h>
+//#include "central.hpp"
+
 
 class Graph {
 public:
@@ -329,7 +332,6 @@ void afficher_composant_connexe()
         }
 }
 
-
 /*void set_centra(Centralisation* a)
    {
         central =a;
@@ -357,6 +359,8 @@ char m_nom;
 //Centralisation central;
 
 };
+
+
 
 
 

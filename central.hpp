@@ -1,9 +1,9 @@
 #ifndef CENTRAL
 #define CENTRAL
 
+
 #define INF 9999999
 #define INT_NULL 7990
-
 
 #include <iostream>
 #include <vector>
@@ -19,10 +19,11 @@ class Centralisation
 public:
 Centralisation(Graph* a);
 ~Centralisation();
-
+//---------------Calcule de centralité------------------------------
 std::map<Sommet*,float> centra_prox();
 std::map<Sommet*,float>  centra_deg();
 std::map<Sommet*,float> centra_propre();
+//--------------Auxilliaire-------------------------------------------
 void dijkstra(int sommet_depart);
 void set_all_unvisited();
 int min_sommet();
@@ -33,9 +34,27 @@ void afficher_prox();
 float calcul_d(int Si, int Sj);
 
 //--------------------gett all result--------------------------
+std::map<Sommet*,float>& get_res_prox();
+std::map<Sommet*,float>& get_res_deg();
+std::map<Sommet*,float>& get_res_propre();
+//------------------Afficher resultats--------------------------
+void afficher_res_prox();
+void afficher_res_deg();
+void afficher_res_propre();
 
+void afficher_all();
+//-----------------Normaliser Resultats-------------------------
+void normaliser_res_deg();
+void normaliser_res_prox();
 
+void un_normaliser_res_deg();
+void un_normaliser_res_prox();
+//----------------File Output-----------------------------------
+void file_out_res_deg(std::string filename="resultat_deg");
+void file_out_res_propre(std::string filename="resultat_propre");
+void file_out_res_prox(std::string filename="resultat_prox");
 
+void file_out_res_all();
 
 private:
 //--------UTILE AU FONCTIONNEMENT DE LA CLASS---------------
@@ -51,6 +70,5 @@ std::map<Sommet*,float> resultat_prox;
 std::map<Sommet*,float> resultat_deg;
 std::map<Sommet*,float> resultat_propre;
 };
-
 
 #endif
