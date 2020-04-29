@@ -51,7 +51,7 @@ void load_file_text_menu(std::string& file, std::string& pond_file)
                 std::cout << "Saisir le fichier du graph : ";
                 std::cin >> file;
                 std::cin.ignore();
-                std::cout << std::endl << "Saisir le fichier du graph : ";
+                std::cout << std::endl << "Saisir le fichier de ponderation correspondant du graph : ";
                 std::cin >> pond_file;
                 std::cin.ignore();
 
