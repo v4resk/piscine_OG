@@ -4,6 +4,7 @@
 
 #define INF 9999999
 #define INT_NULL 7990
+#define PAS_DE_PRED 8990
 
 #include <iostream>
 #include <vector>
@@ -23,6 +24,7 @@ Centralisation(Graph* a);
 std::map<Sommet*,float> centra_prox();
 std::map<Sommet*,float>  centra_deg();
 std::map<Sommet*,float> centra_propre();
+std::map<Sommet*,float> centra_inter(); // a fair
 
 void centra_all();
 //--------------Auxilliaire-------------------------------------------
@@ -39,22 +41,28 @@ float calcul_d(int Si, int Sj);
 std::map<Sommet*,float>& get_res_prox();
 std::map<Sommet*,float>& get_res_deg();
 std::map<Sommet*,float>& get_res_propre();
+std::map<Sommet*,float>& get_res_inter(); // A fair
+std::vector<int> get_m_distance();
 //------------------Afficher resultats--------------------------
 void afficher_res_prox();
 void afficher_res_deg();
 void afficher_res_propre();
+void afficher_res_inter(); // A fair
 
 void afficher_all();
 //-----------------Normaliser Resultats-------------------------
 void normaliser_res_deg();
 void normaliser_res_prox();
+void normaliser_res_inter(); // A fair
 
 void un_normaliser_res_deg();
 void un_normaliser_res_prox();
+void un_normaliser_res_inter(); // A fair
 //----------------File Output-----------------------------------
-void file_out_res_deg(std::string filename="resultat_deg");
-void file_out_res_propre(std::string filename="resultat_propre");
-void file_out_res_prox(std::string filename="resultat_prox");
+void file_out_res_deg(std::string filename="resultat_deg.txt");
+void file_out_res_propre(std::string filename="resultat_propre.txt");
+void file_out_res_prox(std::string filename="resultat_prox.txt");
+void file_out_res_inter(std::string filename="resultat_inter.txt"); // a fair
 
 void file_out_res_all();
 
@@ -71,6 +79,9 @@ std::vector<int> m_pred;
 std::map<Sommet*,float> resultat_prox;
 std::map<Sommet*,float> resultat_deg;
 std::map<Sommet*,float> resultat_propre;
+std::map<Sommet*,float> resultat_inter;
+
 };
+
 
 #endif

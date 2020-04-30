@@ -39,6 +39,11 @@ int get_poid()
         return m_poid;
 }
 
+int get_id()
+{
+        return m_id;
+}
+
 std::pair<Sommet*,Sommet*>* get_pair()
 {
         return &m_pair;

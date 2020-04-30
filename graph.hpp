@@ -105,6 +105,16 @@ void creer_svg()
 
 
 }
+int search_poid_entre(Sommet* p,Sommet* succ){
+        for(auto a : m_arete)
+        {
+                if((a->get_pair()->first==p && a->get_pair()->second == succ) || (a->get_pair()->first==succ && a->get_pair()->second == p))
+                {
+                        int poid = a->get_poid();
+                }
+        }
+        return poid;
+}
 
 void ajouter_poid(int m_id,int poid)
 {
@@ -190,9 +200,9 @@ int get_orientation()
 {
         return orientation;
 }
-void parcour_BFS(int nbr_s0)
+int parcour_BFS(int nbr_s0)
 {
-
+        int ordre = -1;
         Sommet* s0 = getSommet_numeroN(nbr_s0);
         Sommet* temp = nullptr;
         std::queue<Sommet*> file;
@@ -217,9 +227,18 @@ void parcour_BFS(int nbr_s0)
                                 it->setVisited_bool(true);
                                 it->setPred(temp);
                                 file.push(it);
+
                         }
                 }
         }
+
+        for(int i=0; i<m_sommet.size(); ++i)
+        {
+                if(!m_sommet[i]->getVisited_bool())
+                        ordre++;
+        }
+
+        return ordre;
 }
 
 void parcour_DFS(int m_id /*,int* date*/){
@@ -383,8 +402,8 @@ int trouver_comp_connexe()
         return indice_connexe;
 }
 
-int trouver_comp_connexe_kosaraju(Graph *G)
-{
+/*int trouver_comp_connexe_kosaraju(Graph *G)
+   {
         int V,indice = 0;
         std::vector<std::vector<int> > adj;
 
@@ -394,7 +413,7 @@ int trouver_comp_connexe_kosaraju(Graph *G)
 
         indice = connectedComponents.size();
 
-        /* for(auto component : connectedComponents)
+         for(auto component : connectedComponents)
            {
              cout << "\t";
              for(auto node : component)
@@ -402,9 +421,9 @@ int trouver_comp_connexe_kosaraju(Graph *G)
            cout << node << " ";
            }
              cout << endl;
-           }*/
+           }
         return indice;
-}
+   } */
 
 
 void afficher_composant_connexe()
@@ -450,9 +469,6 @@ char m_nom;
 //Centralisation central;
 
 };
-
-
-
 
 
 

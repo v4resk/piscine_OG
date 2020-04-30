@@ -1,6 +1,7 @@
 #include "graph.hpp"
 #include "surcharge.hpp"
 #include "central.hpp"
+#include "vulnerabilite.hpp"
 
 void menu(Graph& a,Centralisation& cent);
 void load_file_text_menu(std::string& file, std::string& pond_file);
@@ -13,16 +14,32 @@ void menu_output(bool& prox, bool propre, bool& deg,Graph& a,Centralisation& cen
 int main(int argc, char const *argv[])
 {
 
-        std::string name_file, name_pond;
+        /*  std::string name_file, name_pond;
+           logo_menu();
+           load_file_text_menu(name_file,name_pond);
 
-        logo_menu();
-        load_file_text_menu(name_file,name_pond);
+           Graph a(name_file, name_pond);
+           //  Connexite(&a);
+           Centralisation cent(&a);
+           std::cout << a;
+           menu(a,cent); */
 
-        Graph a(name_file, name_pond);
+        Graph a("res.txt", "res_pond.txt");
         Centralisation cent(&a);
         std::cout << a;
+        cent.centra_all();
+        cent.afficher_all();
+        cent.dijkstra(0);
+        a.creer_svg();
 
-        menu(a,cent);
+        std::vector<int> b = cent.get_m_distance();
+
+        for(int i=0; i<b.size(); ++i)
+        {
+                std::cout << "Sommet: " << i << " Distance: " << b[i] << std::endl;
+        }
+
+
 
         return 0;
 }
