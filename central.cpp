@@ -152,7 +152,7 @@ void Centralisation::un_normaliser_res_prox(){
 //------------------Fonction calcul centralité------------------------------
 
 std::map<Sommet*,float> Centralisation::centra_prox(){
-
+/*
         for(std::vector<Sommet*>::iterator it = m_sommet->begin(); it != m_sommet->end(); ++it)
         {
                 float totDist = 0;
@@ -162,6 +162,17 @@ std::map<Sommet*,float> Centralisation::centra_prox(){
                         totDist+=calcul_d((*it)->get_id(),(*it2)->get_id());
                 }
                 resultat_prox[*it]=(1.0/totDist);
+        }
+        return resultat_prox; */
+
+        for(auto it1 : *m_sommet)
+        {
+                float totDist=0;
+                for(auto it2 : *m_sommet)
+                {
+                        totDist+= dijkstra(it1->get_id(), it2->get_id());
+                }
+                resultat_prox[it1]=(1.0/totDist);
         }
         return resultat_prox;
 }
@@ -248,11 +259,11 @@ std::map<Sommet*,float> Centralisation::centra_inter()
 //-------------------------------------------------------------------------
 //----------------------Fonction Auxilliaire------------------------------
 
-float Centralisation::calcul_d(int Si, int Sj)
-{
+/*float Centralisation::calcul_d(int Si, int Sj)
+   {
         dijkstra(Si);
         return (float)m_distance[Sj];
-}
+   }*/
 
 void Centralisation::set_all_unvisited(){
 
@@ -311,7 +322,7 @@ bool operator()(const std::pair<Sommet*,double>&a,const std::pair<Sommet*,double
 }
 };
 
-void Centralisation::dijkstra(int sommet_depart)
+float Centralisation::dijkstra(int sommet_depart, int sommet_fin)
 {
         /*    // INIT ----------------------------------------------------------------------------------
             // Tout les sommet sont non marquer et a distance infinie de s0
@@ -460,7 +471,7 @@ void Centralisation::dijkstra(int sommet_depart)
                         {
                                 for(auto it1 : *m_arete)
                                 {
-                                        if(std::make_pair((*m_sommet)[s_int],(*m_sommet)[(*it)->get_id()])== *(it1->get_pair()))
+                                        if(std::make_pair((*m_sommet)[s_int],(*m_sommet)[(*it)->get_id()])== *(it1->get_pair()) || std::make_pair(((*m_sommet)[(*it)->get_id()]),(*m_sommet)[s_int])== *(it1->get_pair()))
                                         {
                                                 poid_adj = it1->get_poid();
                                         }
@@ -482,6 +493,8 @@ void Centralisation::dijkstra(int sommet_depart)
            } */
 
         m_distance = m_dist;
+
+        return m_dist[sommet_fin];
 
 
 

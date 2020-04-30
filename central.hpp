@@ -28,7 +28,7 @@ std::map<Sommet*,float> centra_inter(); // a fair
 
 void centra_all();
 //--------------Auxilliaire-------------------------------------------
-void dijkstra(int sommet_depart);
+float dijkstra(int sommet_depart, int sommet_fin);
 void set_all_unvisited();
 int min_sommet();
 bool getVisited_bool();
