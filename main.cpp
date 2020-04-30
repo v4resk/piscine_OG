@@ -29,6 +29,15 @@ int main(int argc, char const *argv[])
         std::cout << a;
         cent.centra_all();
         cent.afficher_all();
+        cent.dijkstra(0);
+        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
+
+        std::vector<int> b = cent.get_m_distance();
+
+        for(int i=0; i<b.size(); ++i)
+        {
+                std::cout << "Sommet: " << i << " Distance: " << b[i] << std::endl;
+        }
 
 
 
@@ -97,7 +106,7 @@ void menu(Graph& a,Centralisation& cent)
                         std::cout << a;
                         break;
                 case 4:
-                        a.creer_svg();
+                        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
                         break;
                 case 5:
                         quitter=true;
