@@ -59,7 +59,7 @@ Graph(std::string nom_fichier, std::string fichier_ponderation) :  fichier(nom_f
         fichier.close();
 }
 
-void creer_svg()
+void creer_svg(std::map<Sommet*,float> res_deg)
 {
         Svgfile svgOUT("testokartier.svg",1000,1000);
         std::string color = "red";
@@ -82,6 +82,8 @@ void creer_svg()
                         smax.set_Y(s->get_Y());
         }
 
+
+
         ratioX = 1000/(smax.get_X() - smin.get_X() + 2);
         ratioY = 1000/(smax.get_Y() - smin.get_Y() + 2);
 
@@ -94,11 +96,40 @@ void creer_svg()
         }
 
 
-        for (auto s : m_sommet)
+
+        for (auto s : res_deg)
         {
-                std::string b(1, s->get_nom());
-                svgOUT.addDisk(s->get_X()*ratioX, s->get_Y()*ratioY,5, color);
-                svgOUT.addText(s->get_X()*ratioX-5, s->get_Y()*ratioY-7,b, "purple");
+
+                std::string b(1, s.first->get_nom());
+
+                switch((int)s.second)
+                {
+                  case 0:
+                    color = "grey";
+                    break;
+                  case 1:
+                    color = "aqua";
+                    break;
+                  case 2:
+                    color = "teal";
+                    break;
+                  case 3:
+                    color = "olive";
+                    break;
+                  case 4 :
+                    color = "maroon";
+                    break;
+                  case 5 :
+                    color = "red";
+                    break;
+                  default:
+                          color = "grey";
+                          break;
+                }
+
+
+                svgOUT.addDisk((s.first->get_X())*ratioX, (s.first->get_Y())*ratioY,5, color);
+                svgOUT.addText((s.first->get_X())*ratioX-5, (s.first->get_Y())*ratioY-7,b, "purple");
         }
 
 

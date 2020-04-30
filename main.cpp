@@ -89,7 +89,7 @@ void menu(Graph& a,Centralisation& cent)
                         std::cout << a;
                         break;
                 case 4:
-                        a.creer_svg();
+                        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
                         break;
                 case 5:
                         quitter=true;

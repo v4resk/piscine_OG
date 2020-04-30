@@ -60,37 +60,37 @@
 <line x1="522" y1="232" x2="638" y2="290" stroke="black" />
 <line x1="464" y1="116" x2="522" y2="232" stroke="black" />
 <line x1="348" y1="58" x2="464" y2="116" stroke="black" />
-<circle cx="58" cy="232" r="5" fill="red" />
+<circle cx="58" cy="232" r="5" fill="teal" />
 <text x="53" y="225" fill="purple" >A</text>
-<circle cx="58" cy="580" r="5" fill="red" />
+<circle cx="58" cy="580" r="5" fill="olive" />
 <text x="53" y="573" fill="purple" >B</text>
-<circle cx="174" cy="812" r="5" fill="red" />
+<circle cx="174" cy="812" r="5" fill="teal" />
 <text x="169" y="805" fill="purple" >C</text>
-<circle cx="174" cy="232" r="5" fill="red" />
+<circle cx="174" cy="232" r="5" fill="teal" />
 <text x="169" y="225" fill="purple" >D</text>
-<circle cx="290" cy="870" r="5" fill="red" />
+<circle cx="290" cy="870" r="5" fill="teal" />
 <text x="285" y="863" fill="purple" >E</text>
-<circle cx="232" cy="464" r="5" fill="red" />
+<circle cx="232" cy="464" r="5" fill="maroon" />
 <text x="227" y="457" fill="purple" >F</text>
-<circle cx="348" cy="348" r="5" fill="red" />
+<circle cx="348" cy="348" r="5" fill="maroon" />
 <text x="343" y="341" fill="purple" >G</text>
-<circle cx="406" cy="232" r="5" fill="red" />
+<circle cx="406" cy="232" r="5" fill="olive" />
 <text x="401" y="225" fill="purple" >H</text>
-<circle cx="348" cy="116" r="5" fill="red" />
+<circle cx="348" cy="116" r="5" fill="maroon" />
 <text x="343" y="109" fill="purple" >I</text>
-<circle cx="348" cy="58" r="5" fill="red" />
+<circle cx="348" cy="58" r="5" fill="teal" />
 <text x="343" y="51" fill="purple" >J</text>
-<circle cx="464" cy="116" r="5" fill="red" />
+<circle cx="464" cy="116" r="5" fill="olive" />
 <text x="459" y="109" fill="purple" >K</text>
-<circle cx="522" cy="232" r="5" fill="red" />
+<circle cx="522" cy="232" r="5" fill="grey" />
 <text x="517" y="225" fill="purple" >L</text>
-<circle cx="638" cy="290" r="5" fill="red" />
+<circle cx="638" cy="290" r="5" fill="teal" />
 <text x="633" y="283" fill="purple" >M</text>
-<circle cx="638" cy="348" r="5" fill="red" />
+<circle cx="638" cy="348" r="5" fill="olive" />
 <text x="633" y="341" fill="purple" >N</text>
-<circle cx="522" cy="406" r="5" fill="red" />
+<circle cx="522" cy="406" r="5" fill="olive" />
 <text x="517" y="399" fill="purple" >O</text>
-<circle cx="870" cy="290" r="5" fill="red" />
+<circle cx="870" cy="290" r="5" fill="grey" />
 <text x="865" y="283" fill="purple" >P</text>
   
 
