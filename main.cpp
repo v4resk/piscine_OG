@@ -31,6 +31,8 @@ int main(int argc, char const *argv[])
         cent.afficher_all();
         a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
 
+        cent.dijkstra_mod(2);
+
 
         return 0;
 }
