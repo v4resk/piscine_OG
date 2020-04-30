@@ -1,5 +1,28 @@
 #include "central.hpp"
 
+//-------------------------------------------------------------------
+//-----------------------FONCTEUR UTILE------------------------------
+
+class compar_Sommet
+{
+public:
+bool operator()(Sommet* s1,Sommet* s2)
+{
+        return(s1->get_id()==s2->get_id());
+}
+};
+
+class compar_Sommet_trie
+{
+public:
+bool operator()(Sommet* s1,Sommet* s2)
+{
+        return(s1->get_id()<s2->get_id());
+}
+};
+
+
+//---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Centralisation::Centralisation(Graph* a) : m_graph(a){
         m_sommet = a->get_tab_sommet();
@@ -386,10 +409,7 @@ float Centralisation::dijkstra(int sommet_depart, int sommet_fin)
 
 void Centralisation::dijkstra_mod(int sommet_depart)
 {
-        auto comp = [](std::pair<Sommet*,double> p1, std::pair< Sommet*,double> p2) {
-                            return p2.second<p1.second;
-                    };
-        std::priority_queue<std::pair<Sommet*,int>,std::vector<std::pair<Sommet*,int> >,decltype(comp)> file(comp);
+
 
         // Il faut ajouter le cout du chemin -> pair
         // Il faut ajouter une 3eme dimensions pour tout les autres pcc a partir du meme sommet_depart j'usquau meme sommet mais appres la suppression
@@ -403,16 +423,22 @@ void Centralisation::dijkstra_mod(int sommet_depart)
         std::vector< std::vector< std::pair<int,std::vector<Sommet*> >* >* > pcc_a_sommet_depart;
         Sommet* pred=nullptr;
         int j=0;
-        std::vector<Sommet*> sommet_temp_supprimer;
-        bool all_sommet_delet = false;
-
-        std::vector<int> m_dist(m_sommet->size(),INF);
-        set_all_unvisited();
-        int poid_adj=0;
-
-        file.push(std::make_pair((*m_sommet)[sommet_depart],0));
-        m_dist[sommet_depart]=0;
+        int int_sommet_a_sup = INF;
+        std::vector<int> sommet_temp_supprimer;
+        std::vector<int> sommet_supprimer;
+        std::vector<Sommet*> sommet_a_supp;
         do {
+                auto comp = [](std::pair<Sommet*,double> p1, std::pair< Sommet*,double> p2) {
+                                    return p2.second<p1.second;
+                            };
+                std::priority_queue<std::pair<Sommet*,int>,std::vector<std::pair<Sommet*,int> >,decltype(comp)> file(comp);
+                std::vector<int> m_dist(m_sommet->size(),INF);
+                set_all_unvisited();
+                int poid_adj=0;
+
+                file.push(std::make_pair((*m_sommet)[sommet_depart],0));
+                m_dist[sommet_depart]=0;
+
 
                 while(!file.empty())
                 {
@@ -424,42 +450,45 @@ void Centralisation::dijkstra_mod(int sommet_depart)
                         if (d <= m_dist[s_int]) {
                                 for(std::vector<Sommet*>::iterator it = s->get_adja()->begin(); it!=s->get_adja()->end(); ++it )
                                 {
-                                        for(auto it1 : *m_arete)
+                                        if((*it)->get_id() != int_sommet_a_sup )
                                         {
-                                                if(std::make_pair((*m_sommet)[s_int],(*m_sommet)[(*it)->get_id()])== *(it1->get_pair()) || std::make_pair(((*m_sommet)[(*it)->get_id()]),(*m_sommet)[s_int])== *(it1->get_pair()))
+                                                for(auto it1 : *m_arete)
                                                 {
-                                                        poid_adj = it1->get_poid();
+                                                        if(std::make_pair((*m_sommet)[s_int],(*m_sommet)[(*it)->get_id()])== *(it1->get_pair()) || std::make_pair(((*m_sommet)[(*it)->get_id()]),(*m_sommet)[s_int])== *(it1->get_pair()))
+                                                        {
+                                                                poid_adj = it1->get_poid();
+                                                        }
                                                 }
-                                        }
 
-                                        if(m_dist[s_int] + poid_adj < m_dist[(*it)->get_id()])
-                                        {
-                                                m_dist[(*it)->get_id()] = m_dist[s_int] + poid_adj;
-                                                file.push(std::make_pair(*it,m_dist[(*it)->get_id()]));
+                                                if(m_dist[s_int] + poid_adj < m_dist[(*it)->get_id()])
+                                                {
+                                                        m_dist[(*it)->get_id()] = m_dist[s_int] + poid_adj;
+                                                        file.push(std::make_pair(*it,m_dist[(*it)->get_id()]));
 
-                                                m_pred[(*it)->get_id()]=s;
+                                                        m_pred[(*it)->get_id()]=s;
+                                                }
                                         }
                                 }
                         }
                 }
-//------------------------------------------------------------------
-//--------------On recupere les pcc pour aller-------------------
-//--------------de sommet_depart jusqu'a chaque sommet--------------
-//------------------------------------------------------------------
-// pcc_a_sommet_depart[i] est le sommet d'arriver
-// pcc_a_sommet_depart[i][j] chemin numero j   pour aller de sommet de depart a sommet d'arriver i
-// pcc_a_sommet_depart[i][j]->first poid du chemin n°j pour aller de sommet de depart a sommet d'arriver i
-//pcc_a_sommet_depart[i][j]->second  vecteur des sommet composant le chemin n°j pour aller de sommet de depart a sommet d'arriver i
-//pcc_a_sommet_depart[i][j]->second[k]  sommet du vecteur du chemin
-//std::vector< std::vector< std::pair<int,std::vector<Sommet*> > >* > pcc_a_sommet_depart;
+                //------------------------------------------------------------------
+                //--------------On recupere les pcc pour aller-------------------
+                //--------------de sommet_depart jusqu'a chaque sommet--------------
+                //------------------------------------------------------------------
+                // pcc_a_sommet_depart[i] est le sommet d'arriver
+                // pcc_a_sommet_depart[i][j] chemin numero j   pour aller de sommet de depart a sommet d'arriver i
+                // pcc_a_sommet_depart[i][j]->first poid du chemin n°j pour aller de sommet de depart a sommet d'arriver i
+                //pcc_a_sommet_depart[i][j]->second  vecteur des sommet composant le chemin n°j pour aller de sommet de depart a sommet d'arriver i
+                //pcc_a_sommet_depart[i][j]->second[k]  sommet du vecteur du chemin
+                //std::vector< std::vector< std::pair<int,std::vector<Sommet*> > >* > pcc_a_sommet_depart;
 
-//-----------------------------------------------------------------------------
-//---------------------A chaque tour de dijsktra on stock le chemin ici--------
-//-----------------------------------------------------------------------------
+                //-----------------------------------------------------------------------------
+                //---------------------A chaque tour de dijsktra on stock le chemin ici--------
+                //-----------------------------------------------------------------------------
                 for(int i=0; i< m_pred.size(); ++i)
                 {
-                        pcc_a_sommet_depart.push_back(new std::vector< std::pair<int,std::vector<Sommet*> >* >); // On cree [i] dans le quelle on stock un  vecteur de vecteur de chemin avec leur poid
-                        (*pcc_a_sommet_depart[i]).push_back(new std::pair<int,std::vector<Sommet*> >); // on cree [i][j]
+                        pcc_a_sommet_depart.push_back(new std::vector< std::pair<int,std::vector<Sommet*> >* >);                         // On cree [i] dans le quelle on stock un  vecteur de vecteur de chemin avec leur poid
+                        (*pcc_a_sommet_depart[i]).push_back(new std::pair<int,std::vector<Sommet*> >);                         // on cree [i][j]
                 }
                 //----------Netoyage------------------------------------
                 while (pcc_a_sommet_depart.size()>m_sommet->size()) {
@@ -482,6 +511,48 @@ void Centralisation::dijkstra_mod(int sommet_depart)
 //----------------ON SUPRRIME LES ADJACENCE UNE PAR UNE ----------------------
 //------------ET ON REMET CELLES SUPPRIMER PRÉCÉDAMENT------------------------
 
+                //Remplir la liste des sommet a supprimer :
+                for(int i=0; i < pcc_a_sommet_depart.size(); ++i)
+                {
+
+                        for(int k=0; k < pcc_a_sommet_depart[i]->size(); ++k)
+                        {
+
+                                for(int l=0; l< (*(*pcc_a_sommet_depart[i])[k]).second.size(); ++l )
+                                {
+                                        sommet_a_supp.push_back( (*(*pcc_a_sommet_depart[i])[k]).second[l] );
+                                }
+
+                        }
+                }
+                // On supprime les doublons de la liste des sommets a supprimer:
+                std::sort(sommet_a_supp.begin(),sommet_a_supp.end(),compar_Sommet_trie());
+                sommet_a_supp.erase(std::unique(sommet_a_supp.begin(),sommet_a_supp.end(),compar_Sommet()),sommet_a_supp.end());
+                // On supprime le sommet de depart de la liste ainsssi que ceux qui on deja ete supprimer
+                for(std::vector<Sommet*>::iterator it = sommet_a_supp.begin(); it!=sommet_a_supp.end(); ++it )
+                {
+                        if((*it)->get_id()==sommet_depart)
+                                sommet_a_supp.erase(it);
+
+                        for(int i=0; i< sommet_supprimer.size(); ++i)
+                        {
+                                if((*it)->get_id()==sommet_supprimer[i])
+                                        sommet_a_supp.erase(it);
+                        }
+                }
+// Pour tout les sommet on supprime le premier sommet de la liste de leur adjacent
+
+                int_sommet_a_sup = (*sommet_a_supp.begin())->get_id();
+
+// On l'enleve de la liste des sommet a supprimer;
+// On push dans la liste des sommet supprimer
+
+                //    sommet_temp_supprimer.push_back((*sommet_a_supp.begin())->get_id());
+                sommet_supprimer.push_back((*sommet_a_supp.begin())->get_id());
+                sommet_a_supp.erase(sommet_a_supp.begin());
+// On restaure un sommet de la liste des sommets deja supprimer (sommet_temp_supprimer) si elle n'est pas vide
+
+
 //---------------------------------------------------------------------
 //-----------------------DEBUG AFFICHAGE--------------------------------
 //----------------------------------------------------------------------
@@ -499,8 +570,15 @@ void Centralisation::dijkstra_mod(int sommet_depart)
                         }
                         std::cout << std::endl << "-------------------"<< std::endl;
                 }
+
+                std::cout << "Liste des sommet a sup : ";
+                for(auto it : sommet_a_supp)
+                {
+                        std::cout << it->get_id() << " ";
+                }
+
 //---------------------------------------------------------------------------
-        } while(j<=2);
+        } while(!sommet_a_supp.empty());
 }
 
 //---------------------------------------------------------------------------

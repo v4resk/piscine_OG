@@ -54,6 +54,18 @@ void ajouter_adjacents(Sommet* adja)
                 m_adjacents.push_back(adja);
 }
 
+void supprimer_adja(int s)
+{
+        std::vector<Sommet*>::iterator temp = m_adjacents.end();
+        for(std::vector<Sommet*>::iterator it= m_adjacents.begin(); it != m_adjacents.end(); ++it)
+        {
+                if((*it)->get_id()==s)
+                        temp = it;
+        }
+        if(temp!= m_adjacents.end())
+                m_adjacents.erase(temp);
+}
+
 
 void afficher(std::ostream& flux)
 {

@@ -33,7 +33,6 @@ int main(int argc, char const *argv[])
 
         cent.dijkstra_mod(2);
 
-
         return 0;
 }
 
