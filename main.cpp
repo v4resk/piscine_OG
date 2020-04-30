@@ -24,14 +24,14 @@ int main(int argc, char const *argv[])
            std::cout << a;
            menu(a,cent); */
 
-        Graph a("res.txt", "res_pond.txt");
+        Graph a("guadeloupe.txt", "pondeguada.txt");
         Centralisation cent(&a);
         std::cout << a;
         cent.centra_all();
         cent.afficher_all();
         a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
 
-        cent.dijkstra_mod(2);
+        cent.dijkstra_mod(5);
 
         return 0;
 }

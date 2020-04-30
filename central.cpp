@@ -494,6 +494,7 @@ void Centralisation::dijkstra_mod(int sommet_depart)
                 while (pcc_a_sommet_depart.size()>m_sommet->size()) {
                         pcc_a_sommet_depart.erase(pcc_a_sommet_depart.end()-1);
                 }
+
                 //-------------------------------------------------------
                 for(int i=0; i< m_pred.size(); ++i)
                 {
@@ -507,6 +508,15 @@ void Centralisation::dijkstra_mod(int sommet_depart)
                 }
 
                 j++;
+                //--------Netoyage-------------------------------------------
+                for(int i=0; i<pcc_a_sommet_depart.size(); i++)
+                {
+                        while((*pcc_a_sommet_depart[i]).size()>j)
+                        {
+                                pcc_a_sommet_depart[i]->resize(j);
+                        }
+                }
+                //----------------------------------------------------------
 //----------------------------------------------------------------------------
 //----------------ON SUPRRIME LES ADJACENCE UNE PAR UNE ----------------------
 //------------ET ON REMET CELLES SUPPRIMER PRÉCÉDAMENT------------------------
