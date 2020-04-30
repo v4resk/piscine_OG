@@ -30,6 +30,10 @@ std::map<Sommet*,float>&Centralisation::get_res_deg(){
         return resultat_deg;
 }
 
+std::vector<int> Centralisation::get_m_distance(){
+        return m_distance;
+}
+
 //-----------------------------------------------------------------------
 //----------------------------------------------------------------------
 //---------------------------Afficher resultats-------------------------
@@ -154,9 +158,10 @@ std::map<Sommet*,float> Centralisation::centra_prox(){
                 float totDist = 0;
                 for(std::vector<Sommet*>::iterator it2 = m_sommet->begin(); it2!=m_sommet->end(); ++it2)
                 {
+
                         totDist+=calcul_d((*it)->get_id(),(*it2)->get_id());
                 }
-                resultat_prox[*it]=(1/totDist);
+                resultat_prox[*it]=(1.0/totDist);
         }
         return resultat_prox;
 }
@@ -230,6 +235,13 @@ void Centralisation::centra_all()
         centra_deg();
         centra_prox();
         centra_propre();
+        centra_inter();
+}
+
+std::map<Sommet*,float> Centralisation::centra_inter()
+{
+
+        return resultat_inter;
 }
 
 //--------------------------------------------------------------------------
@@ -247,16 +259,11 @@ void Centralisation::set_all_unvisited(){
         for(int i=0; i<m_marque.size(); ++i)
         {
                 m_marque[i]=false;
-                m_pred[i]=0;
+                m_pred[i]=PAS_DE_PRED;
         }
 
 }
 
-
-void Centralisation::setVisited_bool(bool a, int s)
-{
-        m_marque[s]=a;
-}
 
 bool Centralisation::chemin_a_ver_b(int a,int b)
 {
@@ -264,15 +271,15 @@ bool Centralisation::chemin_a_ver_b(int a,int b)
         Sommet* sA = (*m_sommet)[a];
         Sommet* sB = (*m_sommet)[b];
 
-        if(sA->get_adja()!=nullptr && sB->get_adja()!=nullptr)
-                for(std::vector<Sommet*>::iterator it = sA->get_adja()->begin(); it!= sA->get_adja()->end(); ++it )
+        //  if(sA->get_adja()!=nullptr || sB->get_adja()!=nullptr)
+        for(std::vector<Sommet*>::iterator it = sA->get_adja()->begin(); it!= sA->get_adja()->end(); ++it )
+        {
+                //  if(*it!=nullptr && sB !=nullptr)
+                if(*it == sB)
                 {
-                        if(*it!=nullptr && sB !=nullptr)
-                                if(*it == sB)
-                                {
-                                        chemin_existe = true;
-                                }
+                        chemin_existe = true;
                 }
+        }
 
         return chemin_existe;
 
@@ -296,62 +303,194 @@ int Centralisation::min_sommet()
 
 }
 
+class comp {
+public:
+comp();
+bool operator()(const std::pair<Sommet*,double>&a,const std::pair<Sommet*,double >&b){
+        return a.second < b.second;
+}
+};
+
 void Centralisation::dijkstra(int sommet_depart)
 {
-        // INIT ----------------------------------------------------------------------------------
-        // Tout les sommet sont non marquer et a distance infinie de s0
-        int poid_adj=0;
-        set_all_unvisited();
-        for(int i=0; i<m_distance.size(); ++i )
-        {
-                m_distance[i] = INF;
-        }
-        // le sommet de depart a une distance de 0 par rapport a lui meme
-        m_distance[sommet_depart] = 0;
-        // --------------------------------------------------------------------------------------
+        /*    // INIT ----------------------------------------------------------------------------------
+            // Tout les sommet sont non marquer et a distance infinie de s0
+            int poid_adj=0;
+            set_all_unvisited();
+            for(int i=0; i<m_distance.size(); ++i )
+            {
+                    m_distance[i] = INF;
+            }
+            // le sommet de depart a une distance de 0 par rapport a lui meme
+            m_distance[sommet_depart] = 0;
+            // --------------------------------------------------------------------------------------
 
 
-        for(int i=0; i<m_sommet->size(); ++i)
-        {
-                int s =min_sommet();
-                if(s==INT_NULL)
-                        break;
-                setVisited_bool(true,s);
+            for(int i=0; i<m_sommet->size(); ++i)
+            {
+                    int s =min_sommet();
+                    if(s==INT_NULL)
+                            break;
+                    m_marque[s]=true;
 
 
-                for(int j=0; j<m_sommet->size(); j++)
-                {
+                    for(int j=0; j<m_sommet->size(); j++)
+                    {
+                            if(chemin_a_ver_b(s,j))                                   // Si il existe un chemin allant du sommet s a J
+                            {
+                                    for(std::vector<Sommet*>::iterator it=(*m_sommet)[s]->get_adja()->begin(); it != (*m_sommet)[s]->get_adja()->end(); ++it)                       // Parcour les adjacents de s
+                                    {
+                                            if(*it ==  (*m_sommet)[j])                      // Si on trouve J
+                                            {
+                                                    for(auto it : *m_arete)
+                                                    {
+                                                            if(std::make_pair((*m_sommet)[s],(*m_sommet)[j])== *(it->get_pair()))
+                                                            {
+                                                                    poid_adj = it->get_poid();
+                                                            }
+                                                    }
+                                                    // On récupere le poid entre le chemin s et J
+                                            }
+                                            if(m_distance[s]+ poid_adj < m_distance[j])
+                                            {
+                                                    m_distance[j] = m_distance[s]+ poid_adj;
+                                                    m_pred[j]=s;
+                                            }
+                                    }
+                            }
+                    }
 
-                        if(s!=INT_NULL)
+            } */
+
+//1.INITIALISATION
+//------------------------------------
+// Tout les sommet sont non marquer et a distance infinie de s0
+
+
+// le sommet de depart a une distance de 0 par rapport a lui meme
+
+
+
+
+
+
+
+//-----------------------------------------------------------
+//-----------------INITIALISATION----------------------------
+//-----------------------------------------------------------
+        /*    auto cmp = [](std::pair<const Sommet*,double> p1, std::pair<const
+                                                                        Sommet*,double> p2) {
+                               return p2.second<p1.second;
+                       };
+
+            std::priority_queue<std::pair<Sommet*,double>, std::vector<std::pair<Sommet*,double> >, decltype(cmp) > file(cmp);
+            std::pair<Sommet*,double> p;
+            bool cond=false;
+            int compteur=0;
+
+            file.push({(*m_sommet)[sommet_depart],0});
+            set_all_unvisited();
+            for(auto s : *m_sommet)
+            {
+                    file.push({s,INF});
+                    m_distance[s->get_id()]=INF;
+            }
+           //------------------------------------------------------
+           //---------------------BOUCLE--------------------------
+           //------------------------------------------------------
+                do {
+
+
+                        int s = min_sommet();
+                        Sommet* sMin = m_graph->getSommet_numeroN(s);
+
+                        p = file.top();
+                        file.pop();
+                        m_marque[p.first->get_id()]=true;
+
+                        while(!file.empty() && !m_marque[p.first->get_id()])
                         {
-                                if(chemin_a_ver_b(s,j))                           // Si il existe un chemin allant du sommet s a J
+                                p=file.top();
+                                file.pop();
+                        }
+                        for(auto succ : *p.first->get_adja())
+                        {
+                                if(!m_marque[succ->get_id()])
                                 {
-
-                                        for(std::vector<Sommet*>::iterator it=(*m_sommet)[s]->get_adja()->begin(); it != (*m_sommet)[s]->get_adja()->end(); ++it)               // Parcour les adjacents de s
+                                        if(p.second + m_graph->search_poid_entre(p.first,succ) < m_distance[succ->get_id()])
                                         {
-                                                if(*it ==  (*m_sommet)[j])              // Si on trouve J
-                                                {
-                                                        for(auto it : *m_arete)
-                                                        {
-                                                                if(std::make_pair((*m_sommet)[s],(*m_sommet)[j])== *(it->get_pair()))
-                                                                {
-                                                                        poid_adj = it->get_poid();
-                                                                }
-                                                        }
-                                                        // On récupere le poid entre le chemin s et J
-                                                }
-
-                                                if(m_distance[s]+ poid_adj < m_distance[j])
-                                                {
-                                                        m_distance[j] = m_distance[s]+ poid_adj;
-                                                        m_pred[j]=s;
-                                                }
+                                                m_distance[succ->get_id()] = p.second + m_graph->search_poid_entre(p.first,succ);
+                                                m_pred[succ->get_id()] = p.first->get_id();
+                                                file.push(std::make_pair(succ,m_distance[succ->get_id()]));
                                         }
                                 }
                         }
-                }
+               // ON VERIFI SI IL RESTE DES SOMMETS NON MARQUER A UNE DISTANCE NON INFINIE DU SOMMET INITIALE
+                        for(auto b : m_marque)
+                        {
+                                if(!m_marque[b] && m_distance[b]!=INF)
+                                        compteur++;
+                        }
+                        if(compteur!=0)
+                                cond =false;
+                        else
+                                cond =true;
 
+                } while(!cond); */
+
+        auto comp = [](std::pair<Sommet*,double> p1, std::pair< Sommet*,double> p2) {
+                            return p2.second<p1.second;
+                    };
+        std::priority_queue<std::pair<Sommet*,int>,std::vector<std::pair<Sommet*,int> >,decltype(comp)> file(comp);
+        std::vector<int> m_dist(m_sommet->size(),INF);
+        int poid_adj=0;
+
+        file.push(std::make_pair((*m_sommet)[sommet_depart],0));
+        m_dist[sommet_depart]=0;
+
+        while(!file.empty())
+        {
+                Sommet* s = file.top().first;
+                int s_int = s->get_id();
+                int d = file.top().second;
+
+                file.pop();
+                if (d <= m_dist[s_int]) {
+                        for(std::vector<Sommet*>::iterator it = s->get_adja()->begin(); it!=s->get_adja()->end(); ++it )
+                        {
+                                for(auto it1 : *m_arete)
+                                {
+                                        if(std::make_pair((*m_sommet)[s_int],(*m_sommet)[(*it)->get_id()])== *(it1->get_pair()))
+                                        {
+                                                poid_adj = it1->get_poid();
+                                        }
+                                }
+
+                                if(m_dist[s_int] + poid_adj < m_dist[(*it)->get_id()])
+                                {
+                                        m_dist[(*it)->get_id()] = m_dist[s_int] + poid_adj;
+                                        file.push(std::make_pair(*it,m_dist[(*it)->get_id()]));
+
+                                        m_pred[(*it)->get_id()]=s_int;
+                                }
+                        }
+                }
         }
+        /*for(int i=0; i<m_dist.size(); ++i)
+           {
+                std::cout << m_dist[i] <<std::endl;
+           } */
+
+        m_distance = m_dist;
+
+
+
+}
+
+
+void dijkstra_mod()
+{
+
 }
 
 //---------------------------------------------------------------------------

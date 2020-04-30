@@ -54,6 +54,7 @@ void ajouter_adjacents(Sommet* adja)
                 m_adjacents.push_back(adja);
 }
 
+
 void afficher(std::ostream& flux)
 {
         flux << "Nom: "
