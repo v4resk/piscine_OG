@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
         cent.centra_all();
         cent.afficher_all();
         cent.dijkstra(0);
-        a.creer_svg();
+        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
 
         std::vector<int> b = cent.get_m_distance();
 
