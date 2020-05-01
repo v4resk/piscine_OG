@@ -29,18 +29,6 @@ int main(int argc, char const *argv[])
         std::cout << a;
         cent.centra_all();
         cent.afficher_all();
-<<<<<<< HEAD
-||||||| c9c6813
-        cent.dijkstra(0);
-        a.creer_svg();
-
-        std::vector<int> b = cent.get_m_distance();
-
-        for(int i=0; i<b.size(); ++i)
-        {
-                std::cout << "Sommet: " << i << " Distance: " << b[i] << std::endl;
-        }
-=======
         cent.dijkstra(0);
         a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
 
@@ -50,7 +38,6 @@ int main(int argc, char const *argv[])
         {
                 std::cout << "Sommet: " << i << " Distance: " << b[i] << std::endl;
         }
->>>>>>> c98707b084b58a02bcd55d73d2b0cbe8c7e6f28b
 
 
 

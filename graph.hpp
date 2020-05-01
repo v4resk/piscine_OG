@@ -59,6 +59,11 @@ Graph(std::string nom_fichier, std::string fichier_ponderation) :  fichier(nom_f
         fichier.close();
 }
 
+int get_ordre()
+{
+        return ordre;
+}
+
 void creer_svg(std::map<Sommet*,float> res_deg)
 {
         Svgfile svgOUT("testokartier.svg",1000,1000);
