@@ -29,6 +29,7 @@ std::map<Sommet*,float> centra_inter(); // a fair
 void centra_all();
 //--------------Auxilliaire-------------------------------------------
 float dijkstra(int sommet_depart, int sommet_fin);
+void dijkstra_mod(int sommet_depart);
 void set_all_unvisited();
 int min_sommet();
 bool getVisited_bool();
@@ -41,13 +42,13 @@ float calcul_d(int Si, int Sj);
 std::map<Sommet*,float>& get_res_prox();
 std::map<Sommet*,float>& get_res_deg();
 std::map<Sommet*,float>& get_res_propre();
-std::map<Sommet*,float>& get_res_inter(); // A fair
+std::map<Sommet*,float>& get_res_inter();
 std::vector<int> get_m_distance();
 //------------------Afficher resultats--------------------------
 void afficher_res_prox();
 void afficher_res_deg();
 void afficher_res_propre();
-void afficher_res_inter(); // A fair
+void afficher_res_inter();
 
 void afficher_all();
 //-----------------Normaliser Resultats-------------------------
@@ -62,7 +63,7 @@ void un_normaliser_res_inter(); // A fair
 void file_out_res_deg(std::string filename="resultat_deg.txt");
 void file_out_res_propre(std::string filename="resultat_propre.txt");
 void file_out_res_prox(std::string filename="resultat_prox.txt");
-void file_out_res_inter(std::string filename="resultat_inter.txt"); // a fair
+void file_out_res_inter(std::string filename="resultat_inter.txt");
 
 void file_out_res_all();
 
@@ -73,7 +74,7 @@ std::vector<Sommet*>* m_sommet;
 std::vector<Arete*>* m_arete;
 std::vector<bool> m_marque;
 std::vector<int> m_distance;
-std::vector<int> m_pred;
+std::vector<Sommet*> m_pred;
 //-------RECEPTIONNE LE RESULTATS DES FONCTIONS CENTRALISATION------------
 //std::vector<std::pair<Sommet*,float> > resultat_prox; // Stock les resultats de centra_prox. A chaque Sommet associe sont coef de centralité
 std::map<Sommet*,float> resultat_prox;

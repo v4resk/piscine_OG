@@ -25,17 +25,14 @@ int main(int argc, char const *argv[])
            menu(a,cent); 
            
 
-       // Graph a("res.txt", "res_pond.txt");
-       // Centralisation cent(&a);
+        Graph a("guadeloupe.txt", "pondeguada.txt");
+        Centralisation cent(&a);
         std::cout << a;
         cent.centra_all();
         cent.afficher_all();
         a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
 
-        vulnerabiliteGlobal(&a,cent);
-        delete_arete(a.get_tab_arete());
-        vulnerabiliteGlobal(&a,cent);
-
+        cent.dijkstra_mod(5);
 
         return 0;
 }

@@ -109,27 +109,27 @@ void creer_svg(std::map<Sommet*,float> res_deg)
 
                 switch((int)s.second)
                 {
-                  case 0:
-                    color = "grey";
-                    break;
-                  case 1:
-                    color = "aqua";
-                    break;
-                  case 2:
-                    color = "teal";
-                    break;
-                  case 3:
-                    color = "olive";
-                    break;
-                  case 4 :
-                    color = "maroon";
-                    break;
-                  case 5 :
-                    color = "red";
-                    break;
-                  default:
-                          color = "grey";
-                          break;
+                case 0:
+                        color = "grey";
+                        break;
+                case 1:
+                        color = "aqua";
+                        break;
+                case 2:
+                        color = "teal";
+                        break;
+                case 3:
+                        color = "olive";
+                        break;
+                case 4:
+                        color = "maroon";
+                        break;
+                case 5:
+                        color = "red";
+                        break;
+                default:
+                        color = "grey";
+                        break;
                 }
 
 
@@ -482,6 +482,11 @@ void afficher_composant_connexe()
    {
         central =a;
    } */
+
+void supprimer_adja(int s, int s_sup)
+{
+        getSommet_numeroN(s)->supprimer_adja(s_sup);
+}
 
 private:
 
