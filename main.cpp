@@ -82,9 +82,12 @@ void menu(Graph& a,Centralisation& cent)
                 std::cout << std::endl
                           << "1 - Calculate the centralisation" << std::endl
                           << "2 - Save centralisation " << std::endl
-                          << "3 - Afficher le graph en consol" << std::endl
+                          << "3 - Afficher le graph en console" << std::endl
                           << "4 - Afficher le graph en svg" << std::endl
-                          << "5 - Quit" << std::endl
+                          << "5 - Supprimer une arete" << std::endl
+                          << "6 - Afficher centralisation globale" << std::endl
+                          << "7 - Afficher la k-connexite" << std::endl
+                          << "8 - Quit" << std::endl
                           << "> ";
                 std::cin >> choix;
 
@@ -102,6 +105,15 @@ void menu(Graph& a,Centralisation& cent)
                         a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
                         break;
                 case 5:
+                        delete_arete(a.get_tab_arete());
+                        break;
+                case 6:
+                        vulnerabiliteGlobal(&a,cent);
+                        break;
+                case 7:
+                        kconnexite(&a);
+                        break;
+                case 8:
                         quitter=true;
                         break;
                 default:
