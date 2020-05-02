@@ -117,8 +117,13 @@ std::vector<int> Centralisation::get_m_distance()
         return m_distance;
 }
 
-int Centralisation::get_mpcc(){
+std::vector<int> Centralisation::get_mpcc(){
         return m_pcc;
+}
+
+std::vector<Sommet*> Centralisation::get_pred()
+{
+        return m_pred;
 }
 
 //-----------------------------------------------------------------------
@@ -461,7 +466,7 @@ float Centralisation::calculer_inter(std::vector< std::vector< std::pair<int,std
 
 //--------------------------------------------------
 //------------------DEBUG(---------------------------
-/*        std ::cout << std::endl << std::endl << std::endl;
+       std ::cout << std::endl << std::endl << std::endl;
         for(std::list<std::vector<Sommet*> >::iterator it = vec_chemin.begin(); it!=vec_chemin.end(); ++it )
         {
                 std::cout << "Chemin : ";
@@ -471,15 +476,16 @@ float Centralisation::calculer_inter(std::vector< std::vector< std::pair<int,std
                 }
                 std::cout << std::endl;
         }
-        std ::cout << std::endl << "-------------------" << std::endl; */
+        std ::cout << std::endl << "-------------------" << std::endl; 
 //--------------------------------------------------
 //--------------------------------------------------
 // Il y a tout les pcc dans vec_chemin, maintenant on compye size()-1
         test_i_count test_i(i);
+     
         nbr_pcc_j_k = vec_chemin.size();
         nbr_pcc_j_k_par_i+= std::count_if(vec_chemin.begin(),vec_chemin.end(),test_i);
 
-        m_pcc=nbr_pcc_j_k;
+      m_pcc.push_back(nbr_pcc_j_k);
         return (float)nbr_pcc_j_k_par_i/(float)nbr_pcc_j_k;
 }
 

@@ -14,7 +14,7 @@ void menu_output(bool& prox, bool propre, bool& deg,Graph& a,Centralisation& cen
 int main(int argc, char const *argv[])
 {
 
-        /*  std::string name_file, name_pond;
+          std::string name_file, name_pond;
            logo_menu();
            load_file_text_menu(name_file,name_pond);
 
@@ -22,15 +22,15 @@ int main(int argc, char const *argv[])
            //  Connexite(&a);
            Centralisation cent(&a);
            std::cout << a;
-           menu(a,cent);  */
+           menu(a,cent);  
 
 
-        Graph a("res.txt", "res_pond.txt");
+     /*   Graph a("res.txt", "res_pond.txt");
         Centralisation cent(&a);
         std::cout << a;
         cent.centra_all();
         cent.afficher_all();
-        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
+        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());*/
 
         //cent.dijkstra_mod(8);
 
@@ -111,7 +111,7 @@ void menu(Graph& a,Centralisation& cent)
                         vulnerabiliteGlobal(&a,cent);
                         break;
                 case 7:
-                        kconnexite(&a);
+                        kconnexite(&a,&cent);
                         break;
                 case 8:
                         quitter=true;

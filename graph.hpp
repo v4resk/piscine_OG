@@ -303,78 +303,8 @@ void init_parcour_DFS(int m_id)
         parcour_DFS(m_id /*,&date*/);
 
 }
-std::vector<std::vector<int> > kosaraju(int V, std::vector<std::vector<int> > adj)
-{
-        std::vector<bool> visited(V, false);
-        std::stack<int> stack;
-        for (int i = 0; i < V; i++)
-        {
-                if (!visited[i])
-                {
-                        //  FillStack(i, visited, adj, stack);
-                }
-        }
 
-        std::vector<std::vector<int> > transpose = Transpose(V, adj);
 
-        fill(visited.begin(), visited.end(), false);
-
-        std::vector<std::vector<int> > connectedComponents;
-        while(!stack.empty())
-        {
-                int node = stack.top();
-                stack.pop();
-                if(!visited[node])
-                {
-                        std::vector<int> component;
-                        CollectConnectedComponents(node, visited, transpose, component);
-                        connectedComponents.push_back(component);
-                }
-
-        }
-        return connectedComponents;
-}
-
-void FillStack(int node, std::vector<bool> &visited, std::vector<std::vector<int> > &adj, std::stack<int> &stack)
-{
-        visited[node] = true;
-        for (auto next : adj[node])
-        {
-                if (!visited[next])
-                {
-                        FillStack(next, visited, adj, stack);
-                }
-        }
-        stack.push(node);
-}
-
-std::vector<std::vector<int> > Transpose(int V, std::vector<std::vector<int> > adj)
-{
-        std::vector<std::vector<int> > transpose(V);
-        for (int i = 0; i < V; i++)
-        {
-                for (auto next : adj[i])
-                {
-                        transpose[next].push_back(i);
-                }
-        }
-
-        return transpose;
-}
-
-void CollectConnectedComponents(int node, std::vector<bool> &visited,
-                                std::vector<std::vector<int> > &adj, std::vector<int> &component)
-{
-        visited[node] = true;
-        component.push_back(node);
-        for(auto next : adj[node])
-        {
-                if(!visited[next])
-                {
-                        CollectConnectedComponents(next, visited, adj, component);
-                }
-        }
-}
 
 void afficher_bfs(int m_id)
 {
