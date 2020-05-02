@@ -125,9 +125,9 @@ void vulnerabiliteGlobal(Graph *G, Centralisation cent)
         }
 
         /*   for (it = resultat_inter.begin(); it != resultat_inter.end(); ++it)
-        {
-          V_global_inter  = V_global_inter + (G->get_ordre()-1)-it->second*(G->get_tab_sommet()->size()-1);               
-        }*/
+           {
+           V_global_inter  = V_global_inter + (G->get_ordre()-1)-it->second*(G->get_tab_sommet()->size()-1);
+           }*/
 
         V_global_prox = V_global_prox / ((G->get_ordre() ^ 2 - 3 * G->get_ordre() + 2) / 2 * G->get_ordre() - 3);
         V_global_deg = V_global_deg / ((G->get_ordre() ^ 2 - 3 * G->get_ordre() + 2) / 2 * G->get_ordre() - 3);
@@ -151,5 +151,5 @@ void kconnexite(Graph *G)
 
         auto min_connexe = std::min_element(kconnexe.begin(), kconnexe.end());
 
-        std::cout << "ce graph est " << min_connexe << "-arrete-connexe" << endl;
+        std::cout<<"ce graph est "<< *min_connexe <<"-arrete-connexe"<<endl;
 }

@@ -21,6 +21,56 @@ public:
         }
 };
 
+class comparer_vec_de_sommet
+{
+public:
+bool operator()(const Sommet* a, const Sommet* b)
+{
+        return (a == b);
+}
+};
+
+class comparer_dij_trie_pcc
+{
+public:
+bool operator()( std::vector<Sommet*> p1, std::vector<Sommet*> p2)
+{
+        return (p1.size()>p2.size());
+}
+};
+
+
+class comparer_dij_trie_pcc_uniq
+{
+public:
+bool operator()(const Sommet*  p1, const Sommet*  p2)
+{
+        return p1->get_id()==p2->get_id();
+}
+};
+
+class test_i_count
+{
+public:
+test_i_count(int i) : m_i(i){
+}
+bool operator()(std::vector<Sommet*> vec)
+{
+        bool trouve=false;
+        for(int i(0); i<vec.size(); ++i)
+        {
+                if(vec[i]->get_id()==m_i)
+                        trouve=true;
+        }
+        return trouve;
+}
+
+private:
+int m_i;
+};
+
+
+
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Centralisation::Centralisation(Graph *a) : m_graph(a)
@@ -321,6 +371,21 @@ void Centralisation::centra_all()
 
 std::map<Sommet *, float> Centralisation::centra_inter()
 {
+        std::vector<  std::vector< std::vector< std::pair<int,std::vector<Sommet*> >* >* >   >dij;
+
+        for(int j=0; j<m_sommet->size(); ++j)
+        {
+                dij.push_back(dijkstra_mod(j)); // On recupere tout les plus cours chemin de j a k;
+        }
+
+        for(int i=0; i<m_sommet->size(); ++i) // Pour chaque sommet i
+        {
+                for(int j=0; j<m_sommet->size(); ++j) // On additionne a chaque fois le nombre de pcc de j a k
+                {
+                        if(i!=j)
+                                resultat_inter[(*m_sommet)[i]]+=calculer_inter(dij[j],i);
+                }
+        }
 
         return resultat_inter;
 }
@@ -328,6 +393,94 @@ std::map<Sommet *, float> Centralisation::centra_inter()
 //--------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 //----------------------Fonction Auxilliaire------------------------------
+bool Centralisation::les_deux_vecteur_sont_egaux(std::vector<Sommet*> v,std::vector<Sommet*> w){
+
+        bool vecteur_egaux=false;
+        if(v.size()!=w.size())
+                return false;
+        else if(std::equal(std::begin(v),std::end(v),std::begin(w),comparer_dij_trie_pcc_uniq()))
+                vecteur_egaux=true;
+
+        return vecteur_egaux;
+}
+
+
+float Centralisation::calculer_inter(std::vector< std::vector< std::pair<int,std::vector<Sommet*> >* >* > dij, int i){
+        int nbr_pcc_j_k = 0;
+        int nbr_pcc_j_k_par_i = 0;
+        std::list<std::vector<Sommet*> > vec_chemin;
+        std::vector<  std::list<std::vector<Sommet*> >::iterator> a_sup;
+
+
+// Trouvons dans un premier temps le nombre de plus cours chemin pour chaque j k
+
+
+//Eliminer les doublons/les meme chemin dans (*(*dij[i])[k]) et les chaines vides
+        for(int i=0; i < dij.size(); ++i)
+        {
+                for(int k=0; k < dij[i]->size(); ++k)
+                {
+                        vec_chemin.push_back((*(*dij[i])[k]).second);
+                }
+        }
+
+        for(std::list<std::vector<Sommet*> >::iterator it1 = vec_chemin.begin(); it1!= vec_chemin.end(); ++it1)
+        {
+                if(it1->empty())
+                        a_sup.push_back(it1);
+        }
+
+        for(int i=0; i<a_sup.size(); ++i) {
+                vec_chemin.erase(a_sup[i]);
+        }
+
+
+        a_sup.clear();
+        vec_chemin.sort(comparer_dij_trie_pcc());
+
+        for(std::list<std::vector<Sommet*> >::iterator it1 = vec_chemin.begin(); it1!= vec_chemin.end(); ++it1)
+        {
+                for(std::list<std::vector<Sommet*> >::iterator it2 = it1; it2!= vec_chemin.end(); ++it2)
+                {
+                        if(les_deux_vecteur_sont_egaux(*it1,*it2))
+                        {
+                                if(it1!=it2 && std::find(a_sup.begin(),a_sup.end(),it2)==a_sup.end())
+                                        a_sup.push_back(it2);
+                        }
+                }
+        }
+
+
+        for(int i=0; i<a_sup.size(); ++i) {
+                vec_chemin.erase(a_sup[i]);
+        }
+
+//--------------------------------------------------
+//------------------DEBUG(---------------------------
+/*        std ::cout << std::endl << std::endl << std::endl;
+        for(std::list<std::vector<Sommet*> >::iterator it = vec_chemin.begin(); it!=vec_chemin.end(); ++it )
+        {
+                std::cout << "Chemin : ";
+                for(int j=0; j<it->size(); ++j)
+                {
+                        std::cout << (*it)[j]->get_id() << " ";
+                }
+                std::cout << std::endl;
+        }
+        std ::cout << std::endl << "-------------------" << std::endl; */
+//--------------------------------------------------
+//--------------------------------------------------
+// Il y a tout les pcc dans vec_chemin, maintenant on compye size()-1
+        test_i_count test_i(i);
+        nbr_pcc_j_k = vec_chemin.size();
+        nbr_pcc_j_k_par_i+= std::count_if(vec_chemin.begin(),vec_chemin.end(),test_i);
+        return (float)nbr_pcc_j_k_par_i/(float)nbr_pcc_j_k;
+}
+
+
+
+
+
 
 void Centralisation::set_all_unvisited()
 {
@@ -420,7 +573,8 @@ float Centralisation::dijkstra(int sommet_depart, int sommet_fin)
         return m_dist[sommet_fin];
 }
 
-void Centralisation::(int sommet_depart)
+
+std::vector< std::vector< std::pair<int,std::vector<Sommet*> >* >* > Centralisation::dijkstra_mod(int sommet_depart)
 {
 
         // Il faut ajouter le cout du chemin -> pair
@@ -436,16 +590,15 @@ void Centralisation::(int sommet_depart)
         Sommet *pred = nullptr;
         int j = 0;
         int int_sommet_a_sup = INF;
-        std::vector<int> sommet_temp_supprimer;
+        std::vector<std::list<Sommet*>::iterator> sommet_temp_supprimer;
         std::vector<int> sommet_supprimer;
-        std::vector<Sommet *> sommet_a_supp;
-        do
-        {
-                auto comp = [](std::pair<Sommet *, double> p1, std::pair<Sommet *, double> p2) {
-                        return p2.second < p1.second;
-                };
-                std::priority_queue<std::pair<Sommet *, int>, std::vector<std::pair<Sommet *, int>>, decltype(comp)> file(comp);
-                std::vector<int> m_dist(m_sommet->size(), INF);
+        std::list<Sommet*> sommet_a_supp;
+        do {
+                auto comp = [](std::pair<Sommet*,double> p1, std::pair< Sommet*,double> p2) {
+                                    return p2.second<p1.second;
+                            };
+                std::priority_queue<std::pair<Sommet*,int>,std::vector<std::pair<Sommet*,int> >,decltype(comp)> file(comp);
+                std::vector<int> m_dist(m_sommet->size(),INF);
                 set_all_unvisited();
                 int poid_adj = 0;
 
@@ -550,21 +703,27 @@ void Centralisation::(int sommet_depart)
                         }
                 }
                 // On supprime les doublons de la liste des sommets a supprimer:
-                std::sort(sommet_a_supp.begin(), sommet_a_supp.end(), compar_Sommet_trie());
-                sommet_a_supp.erase(std::unique(sommet_a_supp.begin(), sommet_a_supp.end(), compar_Sommet()), sommet_a_supp.end());
+                sommet_a_supp.sort(compar_Sommet_trie());
+                sommet_a_supp.erase(std::unique(sommet_a_supp.begin(),sommet_a_supp.end(),compar_Sommet()),sommet_a_supp.end());
                 // On supprime le sommet de depart de la liste ainsssi que ceux qui on deja ete supprimer
-                for (std::vector<Sommet *>::iterator it = sommet_a_supp.begin(); it != sommet_a_supp.end(); ++it)
+                for(std::list<Sommet*>::iterator it = sommet_a_supp.begin(); it!=sommet_a_supp.end(); ++it )
                 {
-                        if ((*it)->get_id() == sommet_depart)
-                                sommet_a_supp.erase(it);
+                        if((*it)->get_id()==sommet_depart)
+                                sommet_temp_supprimer.push_back(it);
 
                         for (int i = 0; i < sommet_supprimer.size(); ++i)
                         {
-                                if ((*it)->get_id() == sommet_supprimer[i])
-                                        sommet_a_supp.erase(it);
+                                if((*it)->get_id()==sommet_supprimer[i])
+                                        sommet_temp_supprimer.push_back(it);
                         }
                 }
-                // Pour tout les sommet on supprime le premier sommet de la liste de leur adjacent
+
+                for(int i=0; i<sommet_temp_supprimer.size(); i++)
+                {
+                        sommet_a_supp.erase(sommet_temp_supprimer[i]);
+                }
+                sommet_temp_supprimer.clear();
+// Pour tout les sommet on supprime le premier sommet de la liste de leur adjacent
 
                 int_sommet_a_sup = (*sommet_a_supp.begin())->get_id();
 
@@ -576,34 +735,35 @@ void Centralisation::(int sommet_depart)
                 sommet_a_supp.erase(sommet_a_supp.begin());
                 // On restaure un sommet de la liste des sommets deja supprimer (sommet_temp_supprimer) si elle n'est pas vide
 
-                //---------------------------------------------------------------------
-                //-----------------------DEBUG AFFICHAGE--------------------------------
-                //----------------------------------------------------------------------
-                for (int i = 0; i < pcc_a_sommet_depart.size(); ++i)
-                {
-                        std::cout << std::endl
-                                  << "Sommet " << i << std::endl;
-                        for (int k = 0; k < pcc_a_sommet_depart[i]->size(); ++k)
-                        {
-                                std::cout << "Chemin n°" << k << " : ";
-                                for (int l = 0; l < (*(*pcc_a_sommet_depart[i])[k]).second.size(); ++l)
-                                {
-                                        std::cout << (*(*pcc_a_sommet_depart[i])[k]).second[l]->get_id() << " ";
-                                }
-                                std::cout << std::endl;
-                        }
-                        std::cout << std::endl
-                                  << "-------------------" << std::endl;
-                }
+//---------------------------------------------------------------------
+//-----------------------DEBUG AFFICHAGE--------------------------------
+//----------------------------------------------------------------------
+/*              for(int i=0; i < pcc_a_sommet_depart.size(); ++i)
+              {
+                      std::cout << std::endl << "Sommet " << i << std::endl;
+                      for(int k=0; k < pcc_a_sommet_depart[i]->size(); ++k)
+                      {
+                              std::cout << "Chemin n°" << k << " : ";
+                              for(int l=0; l< (*(*pcc_a_sommet_depart[i])[k]).second.size(); ++l )
+                              {
+                                      std::cout << (*(*pcc_a_sommet_depart[i])[k]).second[l]->get_id() << " ";
+                              }
+                              std::cout << std::endl;
+                      }
+                      std::cout << std::endl << "-------------------"<< std::endl;
+              }
 
-                std::cout << "Liste des sommet a sup : ";
-                for (auto it : sommet_a_supp)
-                {
-                        std::cout << it->get_id() << " ";
-                }
+              std::cout << "Liste des sommet a sup : ";
+              for(auto it : sommet_a_supp)
+              {
+                      std::cout << it->get_id() << " ";
+              }
+ */
+//---------------------------------------------------------------------------
+        } while(!sommet_a_supp.empty());
 
-                //---------------------------------------------------------------------------
-        } while (!sommet_a_supp.empty());
+
+        return pcc_a_sommet_depart;
 }
 
 //---------------------------------------------------------------------------
