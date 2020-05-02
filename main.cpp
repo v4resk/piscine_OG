@@ -7,8 +7,8 @@ void menu(Graph& a,Centralisation& cent);
 void load_file_text_menu(std::string& file, std::string& pond_file);
 void logo_menu();
 
-void menu_centra(bool& prox, bool& propre, bool& deg,Graph& a,Centralisation& cent);
-void menu_output(bool& prox, bool propre, bool& deg,Graph& a,Centralisation& cent);
+void menu_centra(bool& prox, bool& propre, bool& deg,bool& inter,Graph& a,Centralisation& cent);
+void menu_output(bool& prox, bool propre, bool& deg,bool& inter,Graph& a,Centralisation& cent);
 
 
 int main(int argc, char const *argv[])
@@ -32,7 +32,6 @@ int main(int argc, char const *argv[])
         cent.afficher_all();
         a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());*/
 
-        //cent.dijkstra_mod(8);
 
         return 0;
 }
@@ -74,14 +73,15 @@ void menu(Graph& a,Centralisation& cent)
         bool calculate_centra_prox(false);
         bool calculate_centra_propre(false);
         bool calculate_centra_deg(false);
+        bool calculate_centra_inter(false);
         bool quitter(false);
 
         int choix(0);
         do {
                 choix=0;
                 std::cout << std::endl
-                          << "1 - Calculate the centralisation" << std::endl
-                          << "2 - Save centralisation " << std::endl
+                          << "1 - Calculer la centralisation" << std::endl
+                          << "2 - Sauvegarder la centralisation " << std::endl
                           << "3 - Afficher le graph en console" << std::endl
                           << "4 - Afficher le graph en svg" << std::endl
                           << "5 - Supprimer une arete" << std::endl
@@ -93,10 +93,10 @@ void menu(Graph& a,Centralisation& cent)
 
                 switch (choix) {
                 case 1:
-                        menu_centra(calculate_centra_prox,calculate_centra_propre,calculate_centra_deg,a,cent);
+                        menu_centra(calculate_centra_prox,calculate_centra_propre,calculate_centra_deg,calculate_centra_inter,a,cent);
                         break;
                 case 2:
-                        menu_output(calculate_centra_prox,calculate_centra_propre,calculate_centra_deg,a,cent);
+                        menu_output(calculate_centra_prox,calculate_centra_propre,calculate_centra_deg,calculate_centra_inter,a,cent);
                         break;
                 case 3:
                         std::cout << a;
@@ -124,7 +124,7 @@ void menu(Graph& a,Centralisation& cent)
         while(!quitter);
 }
 
-void menu_centra(bool& prox, bool& propre, bool& deg,Graph& a,Centralisation& cent)
+void menu_centra(bool& prox, bool& propre, bool& deg,bool& inter,Graph& a,Centralisation& cent)
 {
         bool precedent=false;
 
@@ -138,8 +138,9 @@ void menu_centra(bool& prox, bool& propre, bool& deg,Graph& a,Centralisation& ce
                           << "1 - Calcul centraliter de vecteur propre" << std::endl
                           << "2 - Calcul centraliter de degres" << std::endl
                           << "3 - Calcul centraliter de proximite" << std::endl
-                          << "4 - Tout calculer" << std::endl
-                          << "5 - Precedent" << std::endl
+                          << "4 - Calcul centraliter intermediaire" << std::endl
+                          << "5 - Tout calculer" << std::endl
+                          << "6 - Precedent" << std::endl
                           << "> ";
                 std::cin >> choix;
 
@@ -160,13 +161,18 @@ void menu_centra(bool& prox, bool& propre, bool& deg,Graph& a,Centralisation& ce
                         prox=true;
                         break;
                 case 4:
+                        cent.centra_inter();
+                        cent.afficher_res_inter();
+                        inter=true;
+                case 5:
                         cent.centra_all();
                         cent.afficher_all();
                         prox=true;
                         propre=true;
                         deg=true;
+                        inter=true;
                         break;
-                case 5:
+                case 6:
                         precedent=true;
                         break;
                 default:
@@ -178,7 +184,7 @@ void menu_centra(bool& prox, bool& propre, bool& deg,Graph& a,Centralisation& ce
         } while(!precedent);
 
 }
-void menu_output(bool& prox, bool propre, bool& deg,Graph& a,Centralisation& cent)
+void menu_output(bool& prox, bool propre, bool& deg,bool& inter,Graph& a,Centralisation& cent)
 {
         bool precedent=false;
 
@@ -192,8 +198,9 @@ void menu_output(bool& prox, bool propre, bool& deg,Graph& a,Centralisation& cen
                           << "1 - sauvegarder centraliter de vecteur propre" << std::endl
                           << "2 - sauvegarder centraliter de degres" << std::endl
                           << "3 - sauvegarder centraliter de proximite" << std::endl
-                          << "4 - Tout sauvegarder" << std::endl
-                          << "5 - Precedent" << std::endl
+                          << "4 - sauvegarder centraliter intermediaire" << std::endl
+                          << "5 - Tout sauvegarder" << std::endl
+                          << "6 - Precedent" << std::endl
                           << "> ";
                 std::cin >> choix;
 
@@ -226,6 +233,15 @@ void menu_output(bool& prox, bool propre, bool& deg,Graph& a,Centralisation& cen
                                           <<"Erreur: calculer avant de sauvegarder"<<std::endl;
                         break;
                 case 4:
+                        if(inter) {
+                                cent.file_out_res_inter();
+                                std::cout <<std::endl << "...Done";
+                        }
+                        else
+                                std::cout << std::endl
+                                          <<"Erreur: calculer avant de sauvegarder"<<std::endl;
+                        break;
+                case 5:
                         if(propre && deg && prox) {
                                 cent.file_out_res_all();
                                 std::cout <<std::endl << "...Done";
@@ -234,7 +250,7 @@ void menu_output(bool& prox, bool propre, bool& deg,Graph& a,Centralisation& cen
                                 std::cout << std::endl
                                           <<"Erreur: calculer avant de sauvegarder"<<std::endl;
                         break;
-                case 5:
+                case 6:
                         precedent=true;
                         break;
                 default:

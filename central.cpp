@@ -6,19 +6,19 @@
 class compar_Sommet
 {
 public:
-        bool operator()(Sommet *s1, Sommet *s2)
-        {
-                return (s1->get_id() == s2->get_id());
-        }
+bool operator()(Sommet *s1, Sommet *s2)
+{
+        return (s1->get_id() == s2->get_id());
+}
 };
 
 class compar_Sommet_trie
 {
 public:
-        bool operator()(Sommet *s1, Sommet *s2)
-        {
-                return (s1->get_id() < s2->get_id());
-        }
+bool operator()(Sommet *s1, Sommet *s2)
+{
+        return (s1->get_id() < s2->get_id());
+}
 };
 
 class comparer_vec_de_sommet
@@ -544,9 +544,9 @@ float Centralisation::dijkstra(int sommet_depart, int sommet_fin)
 {
 
         auto comp = [](std::pair<Sommet *, double> p1, std::pair<Sommet *, double> p2) {
-                return p2.second < p1.second;
-        };
-        std::priority_queue<std::pair<Sommet *, int>, std::vector<std::pair<Sommet *, int>>, decltype(comp)> file(comp);
+                            return p2.second < p1.second;
+                    };
+        std::priority_queue<std::pair<Sommet *, int>, std::vector<std::pair<Sommet *, int> >, decltype(comp)> file(comp);
         std::vector<int> m_dist(m_sommet->size(), INF);
         int poid_adj = 0;
 
@@ -598,7 +598,7 @@ std::vector< std::vector< std::pair<int,std::vector<Sommet*> >* >* > Centralisat
         // pcc_a_sommet_depart[i][j]->first poid du chemin n°j pour aller de sommet de depart a sommet d'arriver i
         //pcc_a_sommet_depart[i][j]->second  vecteur des sommet composant le chemin n°j pour aller de sommet de depart a sommet d'arriver i
         //pcc_a_sommet_depart[i][j]->second[k]  sommet du vecteur du chemin
-        std::vector<std::vector<std::pair<int, std::vector<Sommet *>> *> *> pcc_a_sommet_depart;
+        std::vector<std::vector<std::pair<int, std::vector<Sommet *> > *> *> pcc_a_sommet_depart;
         Sommet *pred = nullptr;
         int j = 0;
         int int_sommet_a_sup = INF;
@@ -665,8 +665,8 @@ std::vector< std::vector< std::pair<int,std::vector<Sommet*> >* >* > Centralisat
                 //-----------------------------------------------------------------------------
                 for (int i = 0; i < m_pred.size(); ++i)
                 {
-                        pcc_a_sommet_depart.push_back(new std::vector<std::pair<int, std::vector<Sommet *>> *>); // On cree [i] dans le quelle on stock un  vecteur de vecteur de chemin avec leur poid
-                        (*pcc_a_sommet_depart[i]).push_back(new std::pair<int, std::vector<Sommet *>>);          // on cree [i][j]
+                        pcc_a_sommet_depart.push_back(new std::vector<std::pair<int, std::vector<Sommet *> > *>); // On cree [i] dans le quelle on stock un  vecteur de vecteur de chemin avec leur poid
+                        (*pcc_a_sommet_depart[i]).push_back(new std::pair<int, std::vector<Sommet *> >);          // on cree [i][j]
                 }
                 //----------Netoyage------------------------------------
                 while (pcc_a_sommet_depart.size() > m_sommet->size())
