@@ -46,6 +46,7 @@ std::map<Sommet*,float>& get_res_deg();
 std::map<Sommet*,float>& get_res_propre();
 std::map<Sommet*,float>& get_res_inter();
 std::vector<int> get_m_distance();
+int get_mpcc();
 //------------------Afficher resultats--------------------------
 void afficher_res_prox();
 void afficher_res_deg();
@@ -83,6 +84,7 @@ std::map<Sommet*,float> resultat_prox;
 std::map<Sommet*,float> resultat_deg;
 std::map<Sommet*,float> resultat_propre;
 std::map<Sommet*,float> resultat_inter;
+int m_pcc;
 
 };
 

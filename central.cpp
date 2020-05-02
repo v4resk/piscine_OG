@@ -110,6 +110,10 @@ std::vector<int> Centralisation::get_m_distance(){
         return m_distance;
 }
 
+int Centralisation::get_mpcc(){
+        return m_pcc;
+}
+
 //-----------------------------------------------------------------------
 //----------------------------------------------------------------------
 //---------------------------Afficher resultats-------------------------
@@ -457,6 +461,8 @@ float Centralisation::calculer_inter(std::vector< std::vector< std::pair<int,std
         test_i_count test_i(i);
         nbr_pcc_j_k = vec_chemin.size();
         nbr_pcc_j_k_par_i+= std::count_if(vec_chemin.begin(),vec_chemin.end(),test_i);
+
+        m_pcc=nbr_pcc_j_k;
         return (float)nbr_pcc_j_k_par_i/(float)nbr_pcc_j_k;
 }
 
