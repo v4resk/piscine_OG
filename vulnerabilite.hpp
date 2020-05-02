@@ -137,15 +137,16 @@ void vulnerabiliteGlobal(Graph *G, Centralisation cent)
         afficherVulneGlobal(V_global_prox, V_global_deg, V_global_propre);
 }
 
-void kconnexite(Graph *G)
+void kconnexite(Graph *G,Centralisation cent)
 {
-        std::vector<int> kconnexe;
+        std::vector<float> kconnexe;
+        cent.centra_inter();
 
         for (int i = 0; i < G->get_tab_sommet()->size(); i++)
         {
                 for (int j = 0; j < G->get_tab_sommet()->size(); j++)
                 {
-                        //recherche de chaques chemins possibles
+                        cent.get
                 }
         }
 
