@@ -146,7 +146,7 @@ void kconnexite(Graph *G,Centralisation cent)
         {
                 for (int j = 0; j < G->get_tab_sommet()->size(); j++)
                 {
-                        cent.get
+                        cent.get_mpcc();
                 }
         }
 
