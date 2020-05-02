@@ -440,7 +440,7 @@ float Centralisation::calculer_inter(std::vector< std::vector< std::pair<int,std
 
 //--------------------------------------------------
 //------------------DEBUG(---------------------------
-        std ::cout << std::endl << std::endl << std::endl;
+/*        std ::cout << std::endl << std::endl << std::endl;
         for(std::list<std::vector<Sommet*> >::iterator it = vec_chemin.begin(); it!=vec_chemin.end(); ++it )
         {
                 std::cout << "Chemin : ";
@@ -450,7 +450,7 @@ float Centralisation::calculer_inter(std::vector< std::vector< std::pair<int,std
                 }
                 std::cout << std::endl;
         }
-        std ::cout << std::endl << "-------------------" << std::endl;
+        std ::cout << std::endl << "-------------------" << std::endl; */
 //--------------------------------------------------
 //--------------------------------------------------
 // Il y a tout les pcc dans vec_chemin, maintenant on compye size()-1
@@ -723,27 +723,27 @@ std::vector< std::vector< std::pair<int,std::vector<Sommet*> >* >* > Centralisat
 //---------------------------------------------------------------------
 //-----------------------DEBUG AFFICHAGE--------------------------------
 //----------------------------------------------------------------------
-                for(int i=0; i < pcc_a_sommet_depart.size(); ++i)
-                {
-                        std::cout << std::endl << "Sommet " << i << std::endl;
-                        for(int k=0; k < pcc_a_sommet_depart[i]->size(); ++k)
-                        {
-                                std::cout << "Chemin n°" << k << " : ";
-                                for(int l=0; l< (*(*pcc_a_sommet_depart[i])[k]).second.size(); ++l )
-                                {
-                                        std::cout << (*(*pcc_a_sommet_depart[i])[k]).second[l]->get_id() << " ";
-                                }
-                                std::cout << std::endl;
-                        }
-                        std::cout << std::endl << "-------------------"<< std::endl;
-                }
+/*              for(int i=0; i < pcc_a_sommet_depart.size(); ++i)
+              {
+                      std::cout << std::endl << "Sommet " << i << std::endl;
+                      for(int k=0; k < pcc_a_sommet_depart[i]->size(); ++k)
+                      {
+                              std::cout << "Chemin n°" << k << " : ";
+                              for(int l=0; l< (*(*pcc_a_sommet_depart[i])[k]).second.size(); ++l )
+                              {
+                                      std::cout << (*(*pcc_a_sommet_depart[i])[k]).second[l]->get_id() << " ";
+                              }
+                              std::cout << std::endl;
+                      }
+                      std::cout << std::endl << "-------------------"<< std::endl;
+              }
 
-                std::cout << "Liste des sommet a sup : ";
-                for(auto it : sommet_a_supp)
-                {
-                        std::cout << it->get_id() << " ";
-                }
-
+              std::cout << "Liste des sommet a sup : ";
+              for(auto it : sommet_a_supp)
+              {
+                      std::cout << it->get_id() << " ";
+              }
+ */
 //---------------------------------------------------------------------------
         } while(!sommet_a_supp.empty());
 
