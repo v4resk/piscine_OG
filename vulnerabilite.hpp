@@ -151,5 +151,5 @@ void kconnexite(Graph *G)
 
         auto min_connexe = std::min_element(kconnexe.begin(), kconnexe.end());
 
-        std::cout<<"ce graph est "<<min_connexe<<"-arrete-connexe"<<endl;
+        std::cout << "ce graph est " << min_connexe << "-arrete-connexe" << endl;
 }
