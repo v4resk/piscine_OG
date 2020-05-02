@@ -331,7 +331,6 @@ std::map<Sommet *, float> Centralisation::centra_propre()
         float lambdaMoinsUn = 0;
         float ci = 0;
         std::map<Sommet *, float> map_ci;
-        std::vector<float> vec_ci;
 
         for (std::vector<Sommet *>::iterator it = m_sommet->begin(); it != m_sommet->end(); ++it)
         {
@@ -466,26 +465,26 @@ float Centralisation::calculer_inter(std::vector< std::vector< std::pair<int,std
 
 //--------------------------------------------------
 //------------------DEBUG(---------------------------
-       std ::cout << std::endl << std::endl << std::endl;
-        for(std::list<std::vector<Sommet*> >::iterator it = vec_chemin.begin(); it!=vec_chemin.end(); ++it )
-        {
-                std::cout << "Chemin : ";
-                for(int j=0; j<it->size(); ++j)
-                {
-                        std::cout << (*it)[j]->get_id() << " ";
-                }
-                std::cout << std::endl;
-        }
-        std ::cout << std::endl << "-------------------" << std::endl; 
+/*      std ::cout << std::endl << std::endl << std::endl;
+      for(std::list<std::vector<Sommet*> >::iterator it = vec_chemin.begin(); it!=vec_chemin.end(); ++it )
+      {
+              std::cout << "Chemin : ";
+              for(int j=0; j<it->size(); ++j)
+              {
+                      std::cout << (*it)[j]->get_id() << " ";
+              }
+              std::cout << std::endl;
+      }
+      std ::cout << std::endl << "-------------------" << std::endl; */
 //--------------------------------------------------
 //--------------------------------------------------
 // Il y a tout les pcc dans vec_chemin, maintenant on compye size()-1
         test_i_count test_i(i);
-     
+
         nbr_pcc_j_k = vec_chemin.size();
         nbr_pcc_j_k_par_i+= std::count_if(vec_chemin.begin(),vec_chemin.end(),test_i);
 
-      m_pcc.push_back(nbr_pcc_j_k);
+        m_pcc.push_back(nbr_pcc_j_k);
         return (float)nbr_pcc_j_k_par_i/(float)nbr_pcc_j_k;
 }
 

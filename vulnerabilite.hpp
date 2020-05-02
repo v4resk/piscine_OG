@@ -13,20 +13,20 @@ class trouver_sommet
 {
 private:
 int m_id;
-       
+
 public:
 
-        trouver_sommet(int id): m_id(id)
-        {
-                
-        }
-       bool operator()(Sommet* Si)
-       {
-               if(Si->get_id() == m_id)
-               return true;
-               else
-                return false; 
-       }
+trouver_sommet(int id) : m_id(id)
+{
+
+}
+bool operator()(Sommet* Si)
+{
+        if(Si->get_id() == m_id)
+                return true;
+        else
+                return false;
+}
 };
 
 
@@ -169,7 +169,7 @@ void kconnexite(Graph *G,Centralisation *cent)
         cent->centra_inter();
         float buff;
         int n_chemin;
-         Sommet* S;
+        Sommet* S;
         std::vector<Sommet*> chemin;
 
         for (int i = 0; i < G->get_tab_sommet()->size(); i++)
@@ -177,29 +177,32 @@ void kconnexite(Graph *G,Centralisation *cent)
                 for (int j = 0; j < G->get_tab_sommet()->size(); j++)
                 {
                         n_chemin = 0;
-               buff =  cent->dijkstra(i,j);
-               if(buff != INF) // si un pcc est trouvé
-               {
-                       n_chemin++;
-                       kconnexe.push_back(n_chemin); // alors on ajoute un chemin
-               }
+                        buff =  cent->dijkstra(i,j);
+                        if(buff != INF) // si un pcc est trouvé
+                        {
+                                n_chemin++;
+                                kconnexe.push_back(n_chemin); // alors on ajoute un chemin
+                        }
 
-                S = cent->get_pred()[i];
-               do{  //recuper le chemin
-                       
-                chemin.push_back(S);
-                S = cent->get_pred()[S->get_id()];
-               }
-               while(S != nullptr);
-                        
-                        for(int h = 0;h<chemin.size();h++) //Supprime les arretes du chemin
+                        S = cent->get_pred()[i];
+                        std::cout << "test1";
+                        if(S!=nullptr)
+                                do { //recuper le chemin
+
+                                        chemin.push_back(S);
+                                        S = cent->get_pred()[S->get_id()];
+                                        std::cout << "test2";
+                                }
+                                while(S != nullptr);
+
+                        for(int h = 0; h<chemin.size(); h++) //Supprime les arretes du chemin
                         {
                                 chemin[h]->get_adja()->erase(std::find_if( chemin[h]->get_adja()->begin(), chemin[h]->get_adja()->end(),trouver_sommet(i)));
                         }
                 }
 
-                     // kconnexe.push_back(cent->get_mpcc()[i]);
-                
+                // kconnexe.push_back(cent->get_mpcc()[i]);
+
         }
 
         auto min_connexe = std::min_element(kconnexe.begin(), kconnexe.end());

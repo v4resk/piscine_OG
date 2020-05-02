@@ -14,23 +14,25 @@ void menu_output(bool& prox, bool propre, bool& deg,bool& inter,Graph& a,Central
 int main(int argc, char const *argv[])
 {
 
-          std::string name_file, name_pond;
-           logo_menu();
-           load_file_text_menu(name_file,name_pond);
+        std::string name_file, name_pond;
+        logo_menu();
+        load_file_text_menu(name_file,name_pond);
 
-           Graph a(name_file, name_pond);
-           //  Connexite(&a);
-           Centralisation cent(&a);
-           std::cout << a;
-           menu(a,cent);  
-
-
-     /*   Graph a("res.txt", "res_pond.txt");
+        Graph a(name_file, name_pond);
+        //  Connexite(&a);
         Centralisation cent(&a);
         std::cout << a;
-        cent.centra_all();
-        cent.afficher_all();
-        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());*/
+        menu(a,cent);
+
+
+        /*  Graph a("res.txt", "res_pond.txt");
+           Centralisation cent(&a);
+           std::cout << a;
+           cent.centra_all();
+           cent.afficher_all();
+           a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg()); */
+
+        //kconnexite(&a,&cent);
 
 
         return 0;
