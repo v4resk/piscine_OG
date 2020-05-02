@@ -29,7 +29,7 @@ char get_nom()
         return m_nom;
 }
 
-int get_id()
+int get_id() const
 {
         return m_id;
 }

@@ -29,7 +29,9 @@ std::map<Sommet*,float> centra_inter(); // a fair
 void centra_all();
 //--------------Auxilliaire-------------------------------------------
 float dijkstra(int sommet_depart, int sommet_fin);
-void dijkstra_mod(int sommet_depart);
+std::vector< std::vector< std::pair<int,std::vector<Sommet*> >* >* > dijkstra_mod(int sommet_depart);
+float calculer_inter(std::vector< std::vector< std::pair<int,std::vector<Sommet*> >* >* > dij, int i);
+bool les_deux_vecteur_sont_egaux(std::vector<Sommet*> v,std::vector<Sommet*> w);
 void set_all_unvisited();
 int min_sommet();
 bool getVisited_bool();
