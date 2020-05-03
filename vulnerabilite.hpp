@@ -86,10 +86,12 @@ void Connexite(Graph *G)
 
 void afficherVulneGlobal(float V_global_prox, float V_global_deg, float V_global_propre,float V_global_inter)
 {
+        std::cout << std::endl << "-----------------------------------" << std::endl;
         std::cout << " La centralite de proximité globale est: " << V_global_prox << endl;
         std::cout << "La centralite de degre globale est: " << V_global_deg << endl;
         std::cout << "La centralite de vecteur propre globale est: " << V_global_propre << endl;
         std::cout<<"La centralite d'intermediarite globale est: "<<V_global_inter<<endl;
+        std::cout<< "-----------------------------------" << std::endl;
 }
 
 void vulnerabiliteGlobal(Graph *G, Centralisation cent)

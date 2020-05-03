@@ -85,11 +85,10 @@ void menu(Graph& a,Centralisation& cent)
                           << "2 - Sauvegarder la centralisation " << std::endl
                           << "3 - Sauvegarder le graph" << std::endl
                           << "4 - Afficher le graph en console" << std::endl
-                          << "5 - Afficher le graph en svg" << std::endl  // Calculer indice avant --> Blindage
+                          << "5 - Afficher le graph en svg" << std::endl
                           << "6 - Supprimer une arete" << std::endl
-                          << "7 - Afficher centralisation globale" << std::endl // Blinder(calculer avant) + mettre dans centralisation
-                          << "8 - Afficher la connexite" << std::endl
-                          << "9 - Quit" << std::endl
+                          << "7 - Afficher la connexite" << std::endl
+                          << "8 - Quit" << std::endl
                           << "> ";
                 std::cin >> choix;
 
@@ -108,19 +107,20 @@ void menu(Graph& a,Centralisation& cent)
                         std::cout << a;
                         break;
                 case 5:
-                        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg(),(std::map<Sommet*,float> &)cent.get_res_prox(),(std::map<Sommet*,float> &)cent.get_res_inter(),(std::map<Sommet*,float> &)cent.get_res_propre());
+                        if(calculate_centra_deg)
+                                a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg(),(std::map<Sommet*,float> &)cent.get_res_prox(),(std::map<Sommet*,float> &)cent.get_res_inter(),(std::map<Sommet*,float> &)cent.get_res_propre());
+                        else
+                                std::cout << "Erreur : Pour creer le fichier SVG calculer au moins la centralite de degres" << std::endl << std::endl;
                         break;
                 case 6:
                         delete_arete(a.get_tab_arete());
                         std::cout << "....Done" << std::endl;
                         break;
+
                 case 7:
-                        vulnerabiliteGlobal(&a,cent);
-                        break;
-                case 8:
                         Connexite(&a);
                         break;
-                case 9:
+                case 8:
                         quitter=true;
                         break;
                 default:
@@ -147,7 +147,8 @@ void menu_centra(bool& prox, bool& propre, bool& deg,bool& inter,Graph& a,Centra
                           << "3 - Calcul centralite de proximite" << std::endl
                           << "4 - Calcul centralite intermediaire" << std::endl
                           << "5 - Tout calculer" << std::endl
-                          << "6 - Precedent" << std::endl
+                          << "6 - afficher la centralite global" << std::endl
+                          << "7 - Precedent" << std::endl
                           << "> ";
                 std::cin >> choix;
 
@@ -180,6 +181,12 @@ void menu_centra(bool& prox, bool& propre, bool& deg,bool& inter,Graph& a,Centra
                         inter=true;
                         break;
                 case 6:
+                        if(inter && deg && propre && prox)
+                                vulnerabiliteGlobal(&a,cent);
+                        else
+                                std::cout << "Erreur: calcule toutes les centralisations avant" << std::endl << std::endl;
+                        break;
+                case 7:
                         precedent=true;
                         break;
                 default:

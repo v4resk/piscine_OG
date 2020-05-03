@@ -98,6 +98,36 @@
 <line x1="456" y1="58" x2="608" y2="116" stroke="black" />
 <polygon points=" 456,58 467.995,57.662 464.721,66.2429" style="fill:black" />
 <polygon points=" 608,116 596.005,116.338 599.279,107.757" style="fill:black" />
+<circle cx="76" cy="232" r="5" fill="olive" />
+<text x="71" y="225" fill="purple" >A</text>
+<circle cx="76" cy="580" r="5" fill="darkgoldenrod" />
+<text x="71" y="573" fill="purple" >B</text>
+<circle cx="228" cy="812" r="5" fill="olive" />
+<text x="223" y="805" fill="purple" >C</text>
+<circle cx="228" cy="232" r="5" fill="olive" />
+<text x="223" y="225" fill="purple" >D</text>
+<circle cx="380" cy="870" r="5" fill="olive" />
+<text x="375" y="863" fill="purple" >E</text>
+<circle cx="456" cy="58" r="5" fill="olive" />
+<text x="451" y="51" fill="purple" >J</text>
+<circle cx="304" cy="464" r="5" fill="indianred" />
+<text x="299" y="457" fill="purple" >F</text>
+<circle cx="456" cy="348" r="5" fill="indianred" />
+<text x="451" y="341" fill="purple" >G</text>
+<circle cx="532" cy="232" r="5" fill="darkgoldenrod" />
+<text x="527" y="225" fill="purple" >H</text>
+<circle cx="456" cy="116" r="5" fill="indianred" />
+<text x="451" y="109" fill="purple" >I</text>
+<circle cx="608" cy="116" r="5" fill="darkgoldenrod" />
+<text x="603" y="109" fill="purple" >K</text>
+<circle cx="684" cy="232" r="5" fill="slateblue" />
+<text x="679" y="225" fill="purple" >L</text>
+<circle cx="836" cy="290" r="5" fill="olive" />
+<text x="831" y="283" fill="purple" >M</text>
+<circle cx="836" cy="348" r="5" fill="darkgoldenrod" />
+<text x="831" y="341" fill="purple" >N</text>
+<circle cx="684" cy="406" r="5" fill="darkgoldenrod" />
+<text x="679" y="399" fill="purple" >O</text>
   
 
 <defs>
