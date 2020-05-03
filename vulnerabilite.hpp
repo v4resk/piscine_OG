@@ -65,40 +65,14 @@ void delete_arete(vector<Arete *> *A)
         }
         extr_2->get_adja()->erase(it_temp);
 }
-/*
-   void kConnexite(Graph G)
-   {
-        int orientation;
-        int indice = 0;
 
-
-        orientation = G->get_orientation();
-
-        if(orientation == 0)
-        {
-                indice =  G->trouver_comp_connexe();
-
-        }
-        if(orientation == 1)
-        {
-
-   //  indice = G->trouver_comp_connexe_kosaraju();
-        }
-
-        std::cout<<"la connexité du graph est : "<<indice<<endl;
-
-   } */
 
 void Connexite(Graph *G)
 {
         int ordre_init, n_sommet;
 
         ordre_init = G->get_tab_sommet()->size(); //On recupere l'ordre du graph
-
-        delete_arete((G->get_tab_arete())); //On supprime une arete
         n_sommet = G->parcour_BFS(0);       //On recupere le nombre de sommet parcouru avec l'arete en moins
-        std::cout << std::endl
-                  << "N Sommet : " << n_sommet;
 
         if (ordre_init != n_sommet) //Si l'ordre intiale est different du nombre de sommet parcouru alors le graph n'est plus connexe
         {
@@ -110,12 +84,12 @@ void Connexite(Graph *G)
         }
 }
 
-void afficherVulneGlobal(float V_global_prox, float V_global_deg, float V_global_propre /*,float V_global_inter*/)
+void afficherVulneGlobal(float V_global_prox, float V_global_deg, float V_global_propre,float V_global_inter)
 {
         std::cout << " La centralite de proximité globale est: " << V_global_prox << endl;
-        std::cout << "La centralite de degre globale est: " << V_global_prox << endl;
-        std::cout << "La centralite de vecteur propre globale est: " << V_global_prox << endl;
-        //std::cout<<"La centralite d'intermediarite globale est: "<<V_global_prox<<endl;
+        std::cout << "La centralite de degre globale est: " << V_global_deg << endl;
+        std::cout << "La centralite de vecteur propre globale est: " << V_global_propre << endl;
+        std::cout<<"La centralite d'intermediarite globale est: "<<V_global_inter<<endl;
 }
 
 void vulnerabiliteGlobal(Graph *G, Centralisation cent)
@@ -123,13 +97,13 @@ void vulnerabiliteGlobal(Graph *G, Centralisation cent)
         float V_global_prox = 0;
         float V_global_propre = 0;
         float V_global_deg = 0;
-        // int V_global_inter = 0;
+        float V_global_inter = 0;
 
         std::map<Sommet *, float>::iterator it;
         std::map<Sommet *, float> resultat_prox = cent.get_res_prox();
         std::map<Sommet *, float> resultat_deg = cent.get_res_deg();
         std::map<Sommet *, float> resultat_propre = cent.get_res_propre();
-        //  std::map<Sommet *, float> resultat_inter = cent.get_res_inter();
+        std::map<Sommet *, float> resultat_inter = cent.get_res_inter();
 
         for (it = resultat_prox.begin(); it != resultat_prox.end(); ++it)
         {
@@ -147,17 +121,17 @@ void vulnerabiliteGlobal(Graph *G, Centralisation cent)
                 V_global_propre = V_global_propre + it->first->get_nom();
         }
 
-        /*   for (it = resultat_inter.begin(); it != resultat_inter.end(); ++it)
-           {
-           V_global_inter  = V_global_inter + (G->get_ordre()-1)-it->second*(G->get_tab_sommet()->size()-1);
-           }*/
+        for (it = resultat_inter.begin(); it != resultat_inter.end(); ++it)
+        {
+                V_global_inter  = V_global_inter + (G->get_ordre()-1)-it->second*(G->get_tab_sommet()->size()-1);
+        }
 
         V_global_prox = V_global_prox / ((G->get_ordre() ^ 2 - 3 * G->get_ordre() + 2) / 2 * G->get_ordre() - 3);
         V_global_deg = V_global_deg / ((G->get_ordre() ^ 2 - 3 * G->get_ordre() + 2) / 2 * G->get_ordre() - 3);
         V_global_propre = V_global_propre / ((G->get_ordre() ^ 2 - 3 * G->get_ordre() + 2) / 2 * G->get_ordre() - 3);
-        //  V_global_inter = V_global_inter/((G->get_ordre()^2-3*G->get_ordre()+2)/2*G->get_ordre()-3);
+        V_global_inter = V_global_inter/((G->get_ordre()^2-3*G->get_ordre()+2)/2*G->get_ordre()-3);
 
-        afficherVulneGlobal(V_global_prox, V_global_deg, V_global_propre);
+        afficherVulneGlobal(V_global_prox, V_global_deg, V_global_propre,V_global_inter);
 }
 
 

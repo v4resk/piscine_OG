@@ -1,0 +1,20 @@
+
+----------------------
+centralité de vecteur intermediaire
+--------------------
+Sommet: A Brute: 1.68019 Normaliser: 0.0188786
+Sommet: B Brute: 8.46695 Normaliser: 0.0951343
+Sommet: C Brute: 1.68019 Normaliser: 0.0188786
+Sommet: D Brute: 5.37254 Normaliser: 0.0603657
+Sommet: E Brute: 5.37254 Normaliser: 0.0603657
+Sommet: J Brute: 0 Normaliser: 0
+Sommet: F Brute: 23.3397 Normaliser: 0.262244
+Sommet: G Brute: 23.1232 Normaliser: 0.259811
+Sommet: H Brute: 0 Normaliser: 0
+Sommet: I Brute: 4.58621 Normaliser: 0.0515304
+Sommet: K Brute: 5.90489 Normaliser: 0.066347
+Sommet: L Brute: 23.2714 Normaliser: 0.261477
+Sommet: M Brute: 0 Normaliser: 0
+Sommet: N Brute: 0 Normaliser: 0
+Sommet: O Brute: 0 Normaliser: 0
+---------------------

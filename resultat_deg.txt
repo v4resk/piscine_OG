@@ -1,0 +1,20 @@
+
+----------------------
+centralité de degres
+--------------------
+Sommet: A Brute: 2 Normaliser: 0.142857
+Sommet: B Brute: 3 Normaliser: 0.214286
+Sommet: C Brute: 2 Normaliser: 0.142857
+Sommet: D Brute: 2 Normaliser: 0.142857
+Sommet: E Brute: 2 Normaliser: 0.142857
+Sommet: J Brute: 2 Normaliser: 0.142857
+Sommet: F Brute: 4 Normaliser: 0.285714
+Sommet: G Brute: 4 Normaliser: 0.285714
+Sommet: H Brute: 3 Normaliser: 0.214286
+Sommet: I Brute: 4 Normaliser: 0.285714
+Sommet: K Brute: 3 Normaliser: 0.214286
+Sommet: L Brute: 7 Normaliser: 0.5
+Sommet: M Brute: 2 Normaliser: 0.142857
+Sommet: N Brute: 3 Normaliser: 0.214286
+Sommet: O Brute: 3 Normaliser: 0.214286
+---------------------

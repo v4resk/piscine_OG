@@ -21,18 +21,16 @@ int main(int argc, char const *argv[])
         Graph a(name_file, name_pond);
         //  Connexite(&a);
         Centralisation cent(&a);
-        std::cout << a;
         menu(a,cent);
 
-
-        /*  Graph a("res.txt", "res_pond.txt");
-           Centralisation cent(&a);
-           std::cout << a;
-           cent.centra_all();
-           cent.afficher_all();
-           a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg()); */
-
-        //kconnexite(&a,&cent);
+/*
+        Graph a("res.txt", "res_pond.txt");
+        Centralisation cent(&a);
+        std::cout << a;
+        cent.centra_all();
+        cent.afficher_all();
+        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg(),(std::map<Sommet*,float> &)cent.get_res_prox(),(std::map<Sommet*,float> &)cent.get_res_inter(),(std::map<Sommet*,float> &)cent.get_res_propre());
+        //kconnexite(&a,&cent); */
 
 
         return 0;
@@ -77,6 +75,7 @@ void menu(Graph& a,Centralisation& cent)
         bool calculate_centra_deg(false);
         bool calculate_centra_inter(false);
         bool quitter(false);
+        std::ofstream b("graph.txt");
 
         int choix(0);
         do {
@@ -84,12 +83,13 @@ void menu(Graph& a,Centralisation& cent)
                 std::cout << std::endl
                           << "1 - Calculer la centralisation" << std::endl
                           << "2 - Sauvegarder la centralisation " << std::endl
-                          << "3 - Afficher le graph en console" << std::endl
-                          << "4 - Afficher le graph en svg" << std::endl
-                          << "5 - Supprimer une arete" << std::endl
-                          << "6 - Afficher centralisation globale" << std::endl
-                          << "7 - Afficher la k-connexite" << std::endl
-                          << "8 - Quit" << std::endl
+                          << "3 - Sauvegarder le graph" << std::endl
+                          << "4 - Afficher le graph en console" << std::endl
+                          << "5 - Afficher le graph en svg" << std::endl  // Calculer indice avant --> Blindage
+                          << "6 - Supprimer une arete" << std::endl
+                          << "7 - Afficher centralisation globale" << std::endl // Blinder(calculer avant) + mettre dans centralisation
+                          << "8 - Afficher la connexite" << std::endl
+                          << "9 - Quit" << std::endl
                           << "> ";
                 std::cin >> choix;
 
@@ -101,21 +101,26 @@ void menu(Graph& a,Centralisation& cent)
                         menu_output(calculate_centra_prox,calculate_centra_propre,calculate_centra_deg,calculate_centra_inter,a,cent);
                         break;
                 case 3:
-                        std::cout << a;
+                        b << a;
+                        std::cout << "....Done" << std::endl;
                         break;
                 case 4:
-                        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg());
+                        std::cout << a;
                         break;
                 case 5:
-                        delete_arete(a.get_tab_arete());
+                        a.creer_svg((std::map<Sommet*,float> &)cent.get_res_deg(),(std::map<Sommet*,float> &)cent.get_res_prox(),(std::map<Sommet*,float> &)cent.get_res_inter(),(std::map<Sommet*,float> &)cent.get_res_propre());
                         break;
                 case 6:
-                        vulnerabiliteGlobal(&a,cent);
+                        delete_arete(a.get_tab_arete());
+                        std::cout << "....Done" << std::endl;
                         break;
                 case 7:
-                        kconnexite(&a,&cent);
+                        vulnerabiliteGlobal(&a,cent);
                         break;
                 case 8:
+                        Connexite(&a);
+                        break;
+                case 9:
                         quitter=true;
                         break;
                 default:
@@ -131,16 +136,16 @@ void menu_centra(bool& prox, bool& propre, bool& deg,bool& inter,Graph& a,Centra
         bool precedent=false;
 
         std::cout << std::endl << "-------------------------------------" << std::endl;
-        std::cout << "MENU DES SAUVEGARDES"
+        std::cout << "MENU DES CENTRALITES"
                   << std::endl <<"--------------------------------------" << std::endl;
         int choix(0);
         do {
                 choix =0;
                 std::cout << std::endl
-                          << "1 - Calcul centraliter de vecteur propre" << std::endl
-                          << "2 - Calcul centraliter de degres" << std::endl
-                          << "3 - Calcul centraliter de proximite" << std::endl
-                          << "4 - Calcul centraliter intermediaire" << std::endl
+                          << "1 - Calcul centralite de vecteur propre" << std::endl
+                          << "2 - Calcul centralite de degres" << std::endl
+                          << "3 - Calcul centralite de proximite" << std::endl
+                          << "4 - Calcul centralite intermediaire" << std::endl
                           << "5 - Tout calculer" << std::endl
                           << "6 - Precedent" << std::endl
                           << "> ";

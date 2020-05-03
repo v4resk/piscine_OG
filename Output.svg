@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000">
+
+<text x="10" y="50" fill="darkslategray" >Couleur des sommets = degrés</text>
+<text x="10" y="80" fill="darkslategray" >Pondération des arêtes en bleu</text>
+<text x="10" y="110" fill="darkslategray" >Indice de proximité en orange</text>
+<text x="10" y="140" fill="darkslategray" >Indice d'intermédiarité en rouge</text>
+<text x="10" y="170" fill="darkslategray" >Indice propre en marron</text>
+<text x="67" y="401" fill="navy" >3</text>
+<line x1="76" y1="232" x2="76" y2="580" stroke="black" />
+<polygon points=" 76,232 80.5922,243.087 71.4078,243.087" style="fill:black" />
+<polygon points=" 76,580 71.4078,568.913 80.5922,568.913" style="fill:black" />
+<text x="143" y="227" fill="navy" >3</text>
+<line x1="76" y1="232" x2="228" y2="232" stroke="black" />
+<polygon points=" 76,232 87.0866,227.408 87.0866,236.592" style="fill:black" />
+<polygon points=" 228,232 216.913,236.592 216.913,227.408" style="fill:black" />
+<text x="181" y="517" fill="navy" >2</text>
+<line x1="76" y1="580" x2="304" y2="464" stroke="black" />
+<polygon points=" 76,580 83.7988,570.88 87.9636,579.066" style="fill:black" />
+<polygon points=" 304,464 296.201,473.12 292.036,464.934" style="fill:black" />
+<text x="143" y="691" fill="navy" >3</text>
+<line x1="76" y1="580" x2="228" y2="812" stroke="black" />
+<polygon points=" 76,580 85.9169,586.757 78.2345,591.79" style="fill:black" />
+<polygon points=" 228,812 218.083,805.243 225.765,800.21" style="fill:black" />
+<text x="295" y="836" fill="navy" >3</text>
+<line x1="228" y1="812" x2="380" y2="870" stroke="black" />
+<polygon points=" 228,812 239.995,811.662 236.721,820.243" style="fill:black" />
+<polygon points=" 380,870 368.005,870.338 371.279,861.757" style="fill:black" />
+<text x="333" y="662" fill="navy" >5</text>
+<line x1="380" y1="870" x2="304" y2="464" stroke="black" />
+<polygon points=" 380,870 373.446,859.948 382.474,858.258" style="fill:black" />
+<polygon points=" 304,464 310.554,474.052 301.526,475.742" style="fill:black" />
+<text x="257" y="343" fill="navy" >4</text>
+<line x1="228" y1="232" x2="304" y2="464" stroke="black" />
+<polygon points=" 228,232 235.815,241.106 227.087,243.965" style="fill:black" />
+<polygon points=" 304,464 296.185,454.894 304.913,452.035" style="fill:black" />
+<text x="371" y="401" fill="navy" >8</text>
+<line x1="304" y1="464" x2="456" y2="348" stroke="black" />
+<polygon points=" 304,464 310.027,453.624 315.599,460.925" style="fill:black" />
+<polygon points=" 456,348 449.973,358.376 444.401,351.075" style="fill:black" />
+<text x="447" y="82" fill="navy" >3</text>
+<line x1="456" y1="116" x2="456" y2="58" stroke="black" />
+<polygon points=" 456,116 451.408,104.913 460.592,104.913" style="fill:black" />
+<polygon points=" 456,58 460.592,69.0866 451.408,69.0866" style="fill:black" />
+<text x="523" y="111" fill="navy" >2</text>
+<line x1="456" y1="116" x2="608" y2="116" stroke="black" />
+<polygon points=" 456,116 467.087,111.408 467.087,120.592" style="fill:black" />
+<polygon points=" 608,116 596.913,120.592 596.913,111.408" style="fill:black" />
+<text x="561" y="169" fill="navy" >3</text>
+<line x1="456" y1="116" x2="684" y2="232" stroke="black" />
+<polygon points=" 456,116 467.964,116.934 463.799,125.12" style="fill:black" />
+<polygon points=" 684,232 672.036,231.066 676.201,222.88" style="fill:black" />
+<text x="485" y="169" fill="navy" >4</text>
+<line x1="532" y1="232" x2="456" y2="116" stroke="black" />
+<polygon points=" 532,232 522.083,225.243 529.765,220.21" style="fill:black" />
+<polygon points=" 456,116 465.917,122.757 458.235,127.79" style="fill:black" />
+<text x="599" y="227" fill="navy" >3</text>
+<line x1="532" y1="232" x2="684" y2="232" stroke="black" />
+<polygon points=" 532,232 543.087,227.408 543.087,236.592" style="fill:black" />
+<polygon points=" 684,232 672.913,236.592 672.913,227.408" style="fill:black" />
+<text x="485" y="285" fill="navy" >4</text>
+<line x1="456" y1="348" x2="532" y2="232" stroke="black" />
+<polygon points=" 456,348 458.235,336.21 465.917,341.243" style="fill:black" />
+<polygon points=" 532,232 529.765,243.79 522.083,238.757" style="fill:black" />
+<text x="561" y="285" fill="navy" >4</text>
+<line x1="456" y1="348" x2="684" y2="232" stroke="black" />
+<polygon points=" 456,348 463.799,338.88 467.964,347.066" style="fill:black" />
+<polygon points=" 684,232 676.201,241.12 672.036,232.934" style="fill:black" />
+<text x="561" y="372" fill="navy" >6</text>
+<line x1="456" y1="348" x2="684" y2="406" stroke="black" />
+<polygon points=" 456,348 467.876,346.283 465.612,355.184" style="fill:black" />
+<polygon points=" 684,406 672.124,407.717 674.388,398.816" style="fill:black" />
+<text x="675" y="314" fill="navy" >1</text>
+<line x1="684" y1="232" x2="684" y2="406" stroke="black" />
+<polygon points=" 684,232 688.592,243.087 679.408,243.087" style="fill:black" />
+<polygon points=" 684,406 679.408,394.913 688.592,394.913" style="fill:black" />
+<text x="751" y="372" fill="navy" >3</text>
+<line x1="836" y1="348" x2="684" y2="406" stroke="black" />
+<polygon points=" 836,348 827.279,356.243 824.005,347.662" style="fill:black" />
+<polygon points=" 684,406 692.721,397.757 695.995,406.338" style="fill:black" />
+<text x="751" y="285" fill="navy" >3</text>
+<line x1="684" y1="232" x2="836" y2="348" stroke="black" />
+<polygon points=" 684,232 695.599,235.075 690.027,242.376" style="fill:black" />
+<polygon points=" 836,348 824.401,344.925 829.973,337.624" style="fill:black" />
+<text x="827" y="314" fill="navy" >2</text>
+<line x1="836" y1="290" x2="836" y2="348" stroke="black" />
+<polygon points=" 836,290 840.592,301.087 831.408,301.087" style="fill:black" />
+<polygon points=" 836,348 831.408,336.913 840.592,336.913" style="fill:black" />
+<text x="751" y="256" fill="navy" >3</text>
+<line x1="684" y1="232" x2="836" y2="290" stroke="black" />
+<polygon points=" 684,232 695.995,231.662 692.721,240.243" style="fill:black" />
+<polygon points=" 836,290 824.005,290.338 827.279,281.757" style="fill:black" />
+<text x="637" y="169" fill="navy" >2</text>
+<line x1="608" y1="116" x2="684" y2="232" stroke="black" />
+<polygon points=" 608,116 617.917,122.757 610.235,127.79" style="fill:black" />
+<polygon points=" 684,232 674.083,225.243 681.765,220.21" style="fill:black" />
+<text x="523" y="82" fill="navy" >1</text>
+<line x1="456" y1="58" x2="608" y2="116" stroke="black" />
+<polygon points=" 456,58 467.995,57.662 464.721,66.2429" style="fill:black" />
+<polygon points=" 608,116 596.005,116.338 599.279,107.757" style="fill:black" />
+  
+
+<defs>
+    <radialGradient id="redball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(255,250,250)" />
+      <stop offset="3%" style="stop-color:rgb(255,250,250)" />
+      <stop offset="7%" style="stop-color:rgb(255,160,160)" />
+      <stop offset="70%" style="stop-color:rgb(255,0,0)" />
+      <stop offset="100%" style="stop-color:rgb(255,0,0)" />
+    </radialGradient>
+    <radialGradient id="greenball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(250,255,250)" />
+      <stop offset="3%" style="stop-color:rgb(250,255,250)" />
+      <stop offset="7%" style="stop-color:rgb(160,255,160)" />
+      <stop offset="70%" style="stop-color:rgb(0,255,0)" />
+      <stop offset="100%" style="stop-color:rgb(0,255,0)" />
+    </radialGradient>
+    <radialGradient id="blueball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(250,250,255)" />
+      <stop offset="3%" style="stop-color:rgb(250,250,255)" />
+      <stop offset="7%" style="stop-color:rgb(160,160,255)" />
+      <stop offset="70%" style="stop-color:rgb(0,0,255)" />
+      <stop offset="100%" style="stop-color:rgb(0,255,0)" />
+    </radialGradient>
+    <radialGradient id="yellowball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(255,255,250)" />
+      <stop offset="3%" style="stop-color:rgb(255,255,250)" />
+      <stop offset="7%" style="stop-color:rgb(255,255,160)" />
+      <stop offset="70%" style="stop-color:rgb(255,255,0)" />
+      <stop offset="100%" style="stop-color:rgb(255,255,0)" />
+    </radialGradient>
+    <radialGradient id="greyball" cx="30%" cy="30%" r="100%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:rgb(250,250,250)" />
+      <stop offset="3%" style="stop-color:rgb(250,250,250)" />
+      <stop offset="7%" style="stop-color:rgb(160,160,160)" />
+      <stop offset="70%" style="stop-color:rgb(100,100,100)" />
+      <stop offset="100%" style="stop-color:rgb(100,100,100)" />
+    </radialGradient>
+  </defs>
+
+
+</svg>

@@ -64,14 +64,22 @@ int get_ordre()
         return ordre;
 }
 
-void creer_svg(std::map<Sommet*,float> res_deg)
+int get_orientation()
 {
-        Svgfile svgOUT("testokartier.svg",1000,1000);
+        return orientation;
+}
+
+void creer_svg(std::map<Sommet*,float> res_deg,std::map<Sommet*,float>res_prox,std::map<Sommet*,float>res_inter,std::map<Sommet*,float>res_propre)
+{
+        //Initialisation du sujet SVG
+        Svgfile svgOUT("Output.svg",1000,1000);
+        //Création couleur sommet
         std::string color = "red";
+        //Paramètre pour calcul ratio
         Sommet smin, smax;
         int ratioX, ratioY;
 
-// calcul du min et du max
+        // calcul du min et du max
         for (auto s : m_sommet)
         {
                 if (s->get_X()<smin.get_X())
@@ -87,21 +95,78 @@ void creer_svg(std::map<Sommet*,float> res_deg)
                         smax.set_Y(s->get_Y());
         }
 
-
+        //Calcul ratio
 
         ratioX = 1000/(smax.get_X() - smin.get_X() + 2);
         ratioY = 1000/(smax.get_Y() - smin.get_Y() + 2);
 
-        svgOUT.addGrid(ratioX, 0, "green");
+        //Légende SVG
+        std::string TextColor = "darkslategray";
 
+        svgOUT.addText(10, 50, "Couleur des sommets = degrés",TextColor);
+        svgOUT.addText(10, 80, "Pondération des arêtes en bleu", TextColor);
+        svgOUT.addText(10, 110, "Indice de proximité en orange", TextColor);
+        svgOUT.addText(10, 140, "Indice d'intermédiarité en rouge", TextColor);
+        svgOUT.addText(10, 170, "Indice propre en marron", TextColor);
+
+        // Grille SVG
+        //svgOUT.addGrid(ratioX, 0, "grey");
+
+        // Arête + poid SVG
         for(auto k : m_arete)
         {
-
+                svgOUT.addText(((k->get_X2()*ratioX+k->get_X1()*ratioX)/2-9),((k->get_Y2()*ratioY+k->get_Y1()*ratioY)/2-5),k->get_poid(), "navy");
                 svgOUT.addLine(k->get_X1()*ratioX,k->get_Y1()*ratioY,k->get_X2()*ratioX,k->get_Y2()*ratioY, "black");
+
+
+                //Source: Pour la création des triangle, mon ami Loïs PUSZYNSKI du TD4 m'a aidé
+                if(orientation)
+                {
+                        float angle,a,b,c;
+
+                        a=100;
+                        b=(k->get_X2()-k->get_X1())*ratioX;
+                        c=(k->get_Y2()-k->get_Y1())*ratioY;
+                        angle=acos((a*b)/(100*sqrt(c*c+b*b)));
+                        angle-=3.141592;
+
+                        if(c<0)
+                                angle=-angle;
+
+                        //std::cout<<angle;
+                        svgOUT.addTriangle(k->get_X2()*ratioX,k->get_Y2()*ratioY,(k->get_X2()*ratioX)+12*cos(angle-3.141592/8),(k->get_Y2()*ratioY)+12*sin(angle-3.141592/8),(k->get_X2()*ratioX)+12*cos(angle+3.141592/8),(k->get_Y2()*ratioY)+12*sin(angle+3.141592/8),"black");
+                }
+                if(!orientation)
+                {
+                        float angle,a,b,c;
+
+                        a=100;
+                        b=(k->get_X1()-k->get_X2())*ratioX;
+                        c=(k->get_Y1()-k->get_Y2())*ratioY;
+                        angle=acos((a*b)/(100*sqrt(c*c+b*b)));
+                        angle-=3.141592;
+
+                        if(c<0)
+                                angle=-angle;
+
+                        //std::cout<<angle;
+                        svgOUT.addTriangle(k->get_X1()*ratioX,k->get_Y1()*ratioY,(k->get_X1()*ratioX)+12*cos(angle-3.141592/8),(k->get_Y1()*ratioY)+12*sin(angle-3.141592/8),(k->get_X1()*ratioX)+12*cos(angle+3.141592/8),(k->get_Y1()*ratioY)+12*sin(angle+3.141592/8),"black");
+
+                        a=100;
+                        b=(k->get_X2()-k->get_X1())*ratioX;
+                        c=(k->get_Y2()-k->get_Y1())*ratioY;
+                        angle=acos((a*b)/(100*sqrt(c*c+b*b)));
+                        angle-=3.141592;
+
+                        if(c<0)
+                                angle=-angle;
+
+                        //std::cout<<angle;
+                        svgOUT.addTriangle(k->get_X2()*ratioX,k->get_Y2()*ratioY,(k->get_X2()*ratioX)+12*cos(angle-3.141592/8),(k->get_Y2()*ratioY)+12*sin(angle-3.141592/8),(k->get_X2()*ratioX)+12*cos(angle+3.141592/8),(k->get_Y2()*ratioY)+12*sin(angle+3.141592/8),"black");
+                }
         }
 
-
-
+        //Création sommet(couleur indice deg + name SVG
         for (auto s : res_deg)
         {
 
@@ -110,25 +175,25 @@ void creer_svg(std::map<Sommet*,float> res_deg)
                 switch((int)s.second)
                 {
                 case 0:
-                        color = "grey";
+                        color = "cornflowerblue";
                         break;
                 case 1:
-                        color = "aqua";
+                        color = "cadetblue";
                         break;
                 case 2:
-                        color = "teal";
-                        break;
-                case 3:
                         color = "olive";
                         break;
+                case 3:
+                        color = "darkgoldenrod";
+                        break;
                 case 4:
-                        color = "maroon";
+                        color = "indianred";
                         break;
                 case 5:
-                        color = "red";
+                        color = "tomato";
                         break;
                 default:
-                        color = "grey";
+                        color = "slateblue";
                         break;
                 }
 
@@ -137,16 +202,59 @@ void creer_svg(std::map<Sommet*,float> res_deg)
                 svgOUT.addText((s.first->get_X())*ratioX-5, (s.first->get_Y())*ratioY-7,b, "purple");
         }
 
+        //Récup indice de prox + normalisation
+
+        for(std::map<Sommet*,float>::iterator it=res_prox.begin(); it!=res_prox.end(); ++it)
+        {
+                it->second*=(m_sommet.size()-1);
+        }
+
+        for (auto z : res_prox)
+        {
+                std::string NormProx = std::to_string(z.second);
+                NormProx.resize(5);
+                svgOUT.addText((z.first->get_X())*ratioX+10, (z.first->get_Y())*ratioY-7,NormProx, "orange");
+        }
+
+        for(std::map<Sommet*,float>::iterator it=res_prox.begin(); it!=res_prox.end(); ++it)
+        {
+                it->second*=(m_sommet.size()-1);
+        }
+
+        //Récup indice de inter
+        for (std::map<Sommet *, float>::iterator it = res_inter.begin(); it != res_inter.end(); ++it)
+        {
+                it->second /= (((m_sommet.size() * m_sommet.size()) - (3 * m_sommet.size() + 2)) / 2);
+        }
+
+        for (auto z : res_inter)
+        {
+                std::string NormProx = std::to_string(z.second);
+                NormProx.resize(5);
+                svgOUT.addText((z.first->get_X())*ratioX+10, (z.first->get_Y())*ratioY+5,NormProx, "chocolate");
+        }
+
+        for (std::map<Sommet *, float>::iterator it = res_inter.begin(); it != res_inter.end(); ++it)
+        {
+                it->second *= (((m_sommet.size() * m_sommet.size()) - (3 * m_sommet.size() + 2)) / 2);
+        }
+        //Recup indice propre
 
 
-
+        for (auto z : res_propre)
+        {
+                std::string NormProx = std::to_string(z.second);
+                NormProx.resize(5);
+                svgOUT.addText((z.first->get_X())*ratioX+10, (z.first->get_Y())*ratioY+17,NormProx, "brown");
+        }
 }
 int search_poid_entre(Sommet* p,Sommet* succ){
+        int poid = 0;
         for(auto a : m_arete)
         {
                 if((a->get_pair()->first==p && a->get_pair()->second == succ) || (a->get_pair()->first==succ && a->get_pair()->second == p))
                 {
-                        int poid = a->get_poid();
+                        poid = a->get_poid();
                 }
         }
         return poid;
@@ -232,13 +340,10 @@ void afficher(std::ostream& flux)
         }
 }
 
-int get_orientation()
-{
-        return orientation;
-}
+
 int parcour_BFS(int nbr_s0)
 {
-        int ordre = -1;
+        int ordre = 0;
         Sommet* s0 = getSommet_numeroN(nbr_s0);
         Sommet* temp = nullptr;
         std::queue<Sommet*> file;
@@ -247,8 +352,6 @@ int parcour_BFS(int nbr_s0)
         s0->setVisited_bool(true);
         s0->setPred(s0);
         file.push(s0);
-
-        std::cout << std::endl << "Parcour BFS a partir du sommet "<< nbr_s0 << std::endl;
 
         while (!file.empty())
         {
@@ -270,7 +373,7 @@ int parcour_BFS(int nbr_s0)
 
         for(int i=0; i<m_sommet.size(); ++i)
         {
-                if(!m_sommet[i]->getVisited_bool())
+                if(m_sommet[i]->getVisited_bool())
                         ordre++;
         }
 
@@ -338,80 +441,6 @@ void afficher_dfs(int m_id)
         std::cout << std::endl << "Parcour DFS a partir du sommet "<< m_id << std::endl;
         afficher_bfs(m_id);
 }
-
-// Marche seulement pour graphe non orienter
-int trouver_comp_connexe()
-{
-        int indice_connexe = 0;
-        // On note dans sommet leur comp connexe
-        for(auto it: m_sommet)
-        {
-                if(it->getConnex() == -1)// Si il n'est pas dans une comp connexe
-                {
-                        init_parcour_DFS(it->ObtenirId());
-                        it->setConnex(indice_connexe);
-                        for(auto it2 : m_sommet)
-                        {
-                                if(it2->getPred() != nullptr && it2->getConnex() == -1)
-                                        (it2)->setConnex(indice_connexe);
-                        }
-                        indice_connexe++;
-                }
-        }
-
-        // On crée une map de composant connexe
-        for(auto it: m_sommet)
-        {
-                m__comp_connexe[it->getConnex()].push_back(it);
-        }
-
-        return indice_connexe;
-}
-
-/*int trouver_comp_connexe_kosaraju(Graph *G)
-   {
-        int V,indice = 0;
-        std::vector<std::vector<int> > adj;
-
-        //adj = G->get_tab_sommet();
-        auto connectedComponents = kosaraju(V, adj);
-        std::cout << "le graph contient " << connectedComponents.size() << " Composants fortements connexes." << std::endl;
-
-        indice = connectedComponents.size();
-
-         for(auto component : connectedComponents)
-           {
-             cout << "\t";
-             for(auto node : component)
-           {
-           cout << node << " ";
-           }
-             cout << endl;
-           }
-        return indice;
-   } */
-
-
-void afficher_composant_connexe()
-{
-        std::map<int,std::vector<Sommet*> >::iterator map_it;
-        std::vector<Sommet*>::iterator vec_it;
-
-        for(map_it = m__comp_connexe.begin(); map_it!= m__comp_connexe.end(); ++map_it)
-        {
-                std::cout << "composant connexe n°" << map_it->first << " : " << std::endl;
-                for(vec_it=(*map_it).second.begin(); vec_it != (*map_it).second.end(); ++vec_it)
-                {
-                        std::cout << (*vec_it)->ObtenirId() << " ";
-                }
-                std::cout << std::endl;
-        }
-}
-
-/*void set_centra(Centralisation* a)
-   {
-        central =a;
-   } */
 
 void supprimer_adja(int s, int s_sup)
 {

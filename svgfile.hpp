@@ -26,6 +26,7 @@ Svgfile(std::string _filename = "output.svg", int _width=1000, int _height=800);
 void addDisk(double x, double y, double r, std::string color=defcol);
 void addLine(double x1, double y1, double x2, double y2, std::string color=defcol);
 void addCross(double x, double y, double span, std::string color=defcol);
+void addTriangle(double x1, double y1, double x2, double y2,double x3, double y3, std::string colorFill);
 
 void addText(double x, double y, std::string text, std::string color=defcol);
 void addText(double x, double y, double val, std::string color=defcol);

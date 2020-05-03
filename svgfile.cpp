@@ -142,6 +142,16 @@ std::string fillBallColor(std::string col)
         return col;
 }
 
+void Svgfile::addTriangle(double x1, double y1, double x2, double y2,double x3, double y3, std::string colorFill)
+{
+        m_ostrm << "<polygon points=\" "
+                << x1 << "," << y1 << " "
+                << x2 << "," << y2 << " "
+                << x3 << "," << y3
+                << "\" style=\"fill:" << colorFill
+                << "\" />\n";
+}
+
 /// Effets "Boule en relief"
 /// Horrible bricolage : ces données devraient soit être dans un fichier auxiliaire
 /// ( c'était l'approche initiale qui marchait bien sur Firefox mais pas sur les autres )
