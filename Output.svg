@@ -6,38 +6,18 @@
 <text x="10" y="110" fill="darkslategray" >Indice de proximité en orange</text>
 <text x="10" y="140" fill="darkslategray" >Indice d'intermédiarité en rouge</text>
 <text x="10" y="170" fill="darkslategray" >Indice propre en marron</text>
-<text x="67" y="401" fill="navy" >3</text>
-<line x1="76" y1="232" x2="76" y2="580" stroke="black" />
-<polygon points=" 76,232 80.5922,243.087 71.4078,243.087" style="fill:black" />
-<polygon points=" 76,580 71.4078,568.913 80.5922,568.913" style="fill:black" />
 <text x="143" y="227" fill="navy" >3</text>
 <line x1="76" y1="232" x2="228" y2="232" stroke="black" />
 <polygon points=" 76,232 87.0866,227.408 87.0866,236.592" style="fill:black" />
 <polygon points=" 228,232 216.913,236.592 216.913,227.408" style="fill:black" />
-<text x="181" y="517" fill="navy" >2</text>
-<line x1="76" y1="580" x2="304" y2="464" stroke="black" />
-<polygon points=" 76,580 83.7988,570.88 87.9636,579.066" style="fill:black" />
-<polygon points=" 304,464 296.201,473.12 292.036,464.934" style="fill:black" />
-<text x="143" y="691" fill="navy" >3</text>
-<line x1="76" y1="580" x2="228" y2="812" stroke="black" />
-<polygon points=" 76,580 85.9169,586.757 78.2345,591.79" style="fill:black" />
-<polygon points=" 228,812 218.083,805.243 225.765,800.21" style="fill:black" />
 <text x="295" y="836" fill="navy" >3</text>
 <line x1="228" y1="812" x2="380" y2="870" stroke="black" />
 <polygon points=" 228,812 239.995,811.662 236.721,820.243" style="fill:black" />
 <polygon points=" 380,870 368.005,870.338 371.279,861.757" style="fill:black" />
-<text x="333" y="662" fill="navy" >5</text>
-<line x1="380" y1="870" x2="304" y2="464" stroke="black" />
-<polygon points=" 380,870 373.446,859.948 382.474,858.258" style="fill:black" />
-<polygon points=" 304,464 310.554,474.052 301.526,475.742" style="fill:black" />
 <text x="257" y="343" fill="navy" >4</text>
 <line x1="228" y1="232" x2="304" y2="464" stroke="black" />
 <polygon points=" 228,232 235.815,241.106 227.087,243.965" style="fill:black" />
 <polygon points=" 304,464 296.185,454.894 304.913,452.035" style="fill:black" />
-<text x="371" y="401" fill="navy" >8</text>
-<line x1="304" y1="464" x2="456" y2="348" stroke="black" />
-<polygon points=" 304,464 310.027,453.624 315.599,460.925" style="fill:black" />
-<polygon points=" 456,348 449.973,358.376 444.401,351.075" style="fill:black" />
 <text x="447" y="82" fill="navy" >3</text>
 <line x1="456" y1="116" x2="456" y2="58" stroke="black" />
 <polygon points=" 456,116 451.408,104.913 460.592,104.913" style="fill:black" />
@@ -98,26 +78,26 @@
 <line x1="456" y1="58" x2="608" y2="116" stroke="black" />
 <polygon points=" 456,58 467.995,57.662 464.721,66.2429" style="fill:black" />
 <polygon points=" 608,116 596.005,116.338 599.279,107.757" style="fill:black" />
-<circle cx="76" cy="232" r="5" fill="olive" />
+<circle cx="76" cy="232" r="5" fill="cadetblue" />
 <text x="71" y="225" fill="purple" >A</text>
-<circle cx="76" cy="580" r="5" fill="darkgoldenrod" />
+<circle cx="76" cy="580" r="5" fill="cadetblue" />
 <text x="71" y="573" fill="purple" >B</text>
 <circle cx="228" cy="812" r="5" fill="olive" />
 <text x="223" y="805" fill="purple" >C</text>
 <circle cx="228" cy="232" r="5" fill="olive" />
 <text x="223" y="225" fill="purple" >D</text>
-<circle cx="380" cy="870" r="5" fill="olive" />
+<circle cx="380" cy="870" r="5" fill="cadetblue" />
 <text x="375" y="863" fill="purple" >E</text>
-<circle cx="456" cy="58" r="5" fill="olive" />
-<text x="451" y="51" fill="purple" >J</text>
-<circle cx="304" cy="464" r="5" fill="indianred" />
+<circle cx="304" cy="464" r="5" fill="cadetblue" />
 <text x="299" y="457" fill="purple" >F</text>
-<circle cx="456" cy="348" r="5" fill="indianred" />
+<circle cx="456" cy="348" r="5" fill="darkgoldenrod" />
 <text x="451" y="341" fill="purple" >G</text>
 <circle cx="532" cy="232" r="5" fill="darkgoldenrod" />
 <text x="527" y="225" fill="purple" >H</text>
 <circle cx="456" cy="116" r="5" fill="indianred" />
 <text x="451" y="109" fill="purple" >I</text>
+<circle cx="456" cy="58" r="5" fill="olive" />
+<text x="451" y="51" fill="purple" >J</text>
 <circle cx="608" cy="116" r="5" fill="darkgoldenrod" />
 <text x="603" y="109" fill="purple" >K</text>
 <circle cx="684" cy="232" r="5" fill="slateblue" />

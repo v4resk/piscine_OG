@@ -33,9 +33,10 @@ bool operator()(Sommet* Si)
 
 void delete_arete(vector<Arete *> *A)
 {
-        int buf_id;
+        int buf_id=0;
 
         cout << "entrez l'id de l'arete que voulez supprimer: ";
+        std::cin.clear();
         std::cin >> buf_id;
         cout << endl;
 
